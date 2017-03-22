@@ -1,0 +1,9 @@
+@charset "utf-8";
+.loading{position: absolute;left:0;top: 0;z-index: 5;width:100%;height:100%;background:rgba(0,0,0,0.3);}
+.loading.display-none{display:none;}
+.loading>div.loading_inner{display: table;width:100%;height: 100%;}
+.loading>div.loading_inner>a{display: table-cell;font:normal 16px/1.5 Microsoft YaHei;color:#fff;text-align: center;cursor:default;}
+.loading>div.loading_inner>a>span.text{display:inline-block;padding:20px 0 20px 50px;width:200px;text-align: left;background:url(../images/loading-1.gif) 0 center no-repeat;vertical-align: middle;}
+.loading.fail{background: none;}
+.loading.fail>div.loading_inner>a{color: #333;}
+.loading.fail>div.loading_inner>a>span.text{padding:20px 0;text-align: center;background: none;}
