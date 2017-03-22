@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ckplayer简单调用演示</title>
+</head>
+<body>
+<div id="a1"></div>
+<script type="text/javascript" src="demo/ckplayer/ckplayer.js" charset="utf-8"></script>
+<script type="text/javascript">
+	var flashvars={
+		f:'demo/temp/sdafdsafd.flv',
+		c:0,
+		b:1,
+		p:1
+	};
+	var video=['demo/temp/kjzzmb.mp4->video/mp4'];
+	//CKobject.embed('ckplayer/ckplayer.swf','a1','ckplayer_a1','1200','674',true,flashvars,video);
+	var params={bgcolor:'#FFF',allowFullScreen:true,allowScriptAccess:'always',wmode:'transparent'};
+	CKobject.embedSWF('ckplayer/ckplayer.swf','a1','ckplayer_a1','1200','674',flashvars,params);
+</script>
+</body>
+</html>

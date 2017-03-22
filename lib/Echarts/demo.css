@@ -1,0 +1,8 @@
+.pdtb20{padding-top: 20px;padding-bottom: 20px;}
+.font16{font-size: 16px;}
+
+.container a{text-decoration: underline;}
+.container a:hover{text-decoration: none;}
+.other_charts_ls span, .other_charts_ls a{display: inline-block;vertical-align: middle;}
+
+.tooltip_legend{display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;}

@@ -1,0 +1,270 @@
+<div class="container">
+<br/>	
+	<pre>
+var a = [1,2,3,4].each(function(x){return x > 2 ? x : null}); 
+var b = [1,2,3,4].each(function(x){return x < 0 ? x : null}); 
+alert(a); 
+alert(b); 	
+
+//求两个集合的补集 
+var a = [1,2,3,4]; 
+var b = [3,4,5,6]; 
+alert(Array.complement(a,b)); 
+
+//求两个集合的交集 
+var a = [1,2,3,4]; 
+var b = [3,4,5,6]; 
+alert(Array.intersect(a,b)); 
+
+//求两个集合的差集 
+var a = [1,2,3,4]; 
+var b = [3,4,5,6]; 
+alert(Array.minus(a,b)); 
+
+//求两个集合的并集 
+var a = [1,2,3,4]; 
+var b = [3,4,5,6]; 
+alert(Array.union(a,b));
+
+//根据元素值删除数组元素
+a.removeValue(3);
+alert(a);
+
+//根据位置删除数组元素
+b.remove(3);
+alert(b);
+
+<h2>js数组操作常用方法</h2>
+toString()：把数组转换成一个字符串
+
+toLocaleString()：把数组转换成一个字符串
+
+join()：把数组转换成一个用符号连接的字符串
+
+shift()：将数组头部的一个元素移出
+
+unshift()：在数组的头部插入一个元素
+
+pop()：从数组尾部删除一个元素
+
+push()：把一个元素添加到数组的尾部
+
+concat()：给数组添加元素
+
+slice()：返回数组的部分
+
+reverse()：将数组反向排序
+
+sort()：对数组进行排序操作
+
+splice()：插入、删除或者替换一个数组元素
+
+/*  替换字符串 
+    @str        要处理的字符集
+    @oldStr        原字符
+    @newStr     新字符
+*/
+function Repalce(str,oldStr,newStr)
+{
+    var reg = eval("/"+oldStr+"/g");   
+    return str.replace(reg,newStr); 
+}
+
+
+/*  取左边的指定长度的值  
+    @str        要处理的字符集
+    @n            长度
+*/
+function Left(str,n)  
+{
+    if(str.length > 0)
+    {
+        if(n>str.length) n = str.length;
+        return str.s str(0,n)
+    }
+    else
+    {
+        return;
+    }
+}
+
+/************************************字符处理**********************************/
+/*  取右边的指定长度的值   
+    @str        要处理的字符集
+    @n            长度
+*/
+function Right(str,n)
+{
+    if(str.length > 0)
+    {
+        if(n>=str.length) return str;
+        return str.s str(str.length-n,n);
+    }
+    else
+    {
+        return;
+    }
+}
+
+
+/*  Trim:清除两边空格 
+    @str        要处理的字符集
+*/
+function Trim(str) 
+{
+    if (typeof str == 'string') return str.replace(/(^\s*)|(\s*$)/g, '');
+}
+
+
+/*  LTrim:清除左边的空格 
+    @str        要处理的字符集
+*/
+function Ltrim(str) 
+{ 
+    if (typeof str == 'string') return str.replace(/(^\s*)/g, '');
+}
+
+
+/*  RTrim: 清除右边的空格 
+    @str        要处理的字符集
+*/
+function Rtrim(str) 
+{ 
+    if (typeof str == 'string') return str.replace(/(\s*$)/g, '');
+}
+
+
+/*  清除前后的非字符
+    @str        要处理的字符集
+*/
+function Strip(str) {
+    if (typeof str == 'string') return str.replace(/^\s+/, '').replace(/(^\s*)|(\s*$)/g, '');
+}
+
+
+/*  过滤字符里面的HTML标签
+    @str        要处理的字符集
+*/
+function StripTags(str) {
+    if (typeof str == 'string')return str.replace(/<\/?[^>]+>/gi, '').replace(/(^\s*)|(\s*$)/g, '');
+}
+	</pre>
+</div>
+
+<script type="text/javascript" src="lib/util/arr_operate.js"></script>
+<script type="text/javascript">
+
+function StringBuffer() {
+	this._strs = new Array();
+}
+StringBuffer.prototype.append = function (str) {
+	this._strs.push(str);
+};
+StringBuffer.prototype.toString = function() {
+	this._strs.join("");
+};
+StringBuffer.prototype.getString = function() {
+	return this._strs;
+};
+
+$(function(){
+	var a1 = [1,2,3,4].each(function(x){return x > 2 ? x : null}); 
+	var b1 = [1,2,3,4].each(function(x){return x < 0 ? x : null}); 
+	//alert(a1); 
+	//alert(b1); 	
+	
+	//求两个集合的补集 
+	var a = [1,2,3,4]; 
+	var b = [3,4,5,6]; 
+	//alert("补集："+"\n"+Array.complement(a,b)); 
+	
+	//求两个集合的交集 
+	//alert("交集："+"\n"+Array.intersect(a,b)); 
+	
+	//求两个集合的差集 
+	//alert("差集："+"\n"+Array.minus(a,b)); 
+	
+	//求两个集合的并集  
+	//alert("并集："+"\n"+Array.union(a,b)); 
+	
+	//根据元素值删除数组元素
+//	a.removeValue(3);
+	//alert("根据元素值删除a数组元素："+"\n"+a);
+	
+	//根据位置删除数组元素
+//	b.remove(3);
+	//alert("根据位置删除b数组元素："+"\n"+b);
+	$.ajax({
+		type:"get",
+		url:"testArr.json",
+		async:true,
+		success: function(resData){
+			var arrA = resData.data.cus_vuserlist;
+			var arrB = [{"refno":"10027160815094923","refnamedesc":"marong27(电焊工)"},{"refno":"10028160815094923","refnamedesc":"marong28(电焊工)"},{"refno":"10029160815094923","refnamedesc":"marong29(电焊工)"},{"refno":"10030160815094923","refnamedesc":"marong30(电焊工)"},{"refno":"10031160815094923","refnamedesc":"marong31(电焊工)"},{"refno":"10032160815094923","refnamedesc":"marong32(电焊工)"},{"refno":"10033160815094923","refnamedesc":"marong33(电焊工)"},{"refno":"10034160815094923","refnamedesc":"marong34(电焊工)"},{"refno":"10035160815094923","refnamedesc":"marong35(电焊工)"},{"refno":"10036160815094923","refnamedesc":"marong36(电焊工)"},{"refno":"10037160815094923","refnamedesc":"marong37(电焊工)"},{"refno":"10038160815094923","refnamedesc":"marong38(电焊工)"},{"refno":"10039160815094923","refnamedesc":"marong39(电焊工)"},{"refno":"10040160815094923","refnamedesc":"marong40(电焊工)"},{"refno":"10041160815094923","refnamedesc":"marong41(电焊工)"},{"refno":"10042160815094923","refnamedesc":"marong42(电焊工)"},{"refno":"10043160815094923","refnamedesc":"marong43(电焊工)"},{"refno":"10044160815094923","refnamedesc":"marong44(电焊工)"},{"refno":"10045160815094923","refnamedesc":"marong45(电焊工)"},{"refno":"10046160815094923","refnamedesc":"marong46(电焊工)"},{"refno":"10047160815094923","refnamedesc":"marong47(电焊工)"},{"refno":"10048160815094923","refnamedesc":"marong48(电焊工)"},{"refno":"10049160815094923","refnamedesc":"marong49(电焊工)"},{"refno":"10050160815094923","refnamedesc":"marong50(电焊工)"},{"refno":"10051160815094923","refnamedesc":"marong51(电焊工)"},{"refno":"10052160815094923","refnamedesc":"marong52(电焊工)"},{"refno":"10053160815094923","refnamedesc":"marong53(电焊工)"},{"refno":"10054160815094923","refnamedesc":"marong54(电焊工)"},{"refno":"10055160815094923","refnamedesc":"marong55(电焊工)"},{"refno":"10056160815094923","refnamedesc":"marong56(电焊工)"},{"refno":"10057160815094923","refnamedesc":"marong57(电焊工)"},{"refno":"10058160815094923","refnamedesc":"marong58(电焊工)"},{"refno":"10059160815094923","refnamedesc":"marong59(电焊工)"},{"refno":"10060160815094923","refnamedesc":"marong60(电焊工)"},{"refno":"10061160815094923","refnamedesc":"marong61(电焊工)"},{"refno":"10062160815094923","refnamedesc":"marong62(电焊工)"},{"refno":"10063160815094923","refnamedesc":"marong63(电焊工)"},{"refno":"10064160815094923","refnamedesc":"marong64(电焊工)"},{"refno":"10065160815094923","refnamedesc":"marong65(电焊工)"},{"refno":"10066160815094923","refnamedesc":"marong66(电焊工)"},{"refno":"10067160815094923","refnamedesc":"marong67(电焊工)"},{"refno":"10068160815094923","refnamedesc":"marong68(电焊工)"},{"refno":"10069160815094923","refnamedesc":"marong69(电焊工)"},{"refno":"10070160815094923","refnamedesc":"marong70(电焊工)"},{"refno":"10071160815094923","refnamedesc":"marong71(电焊工)"},{"refno":"10072160815094923","refnamedesc":"marong72(电焊工)"},{"refno":"10073160815094923","refnamedesc":"marong73(电焊工)"},{"refno":"10074160815094923","refnamedesc":"marong74(电焊工)"},{"refno":"10075160815094923","refnamedesc":"marong75(电焊工)"},{"refno":"10076160815094923","refnamedesc":"marong76(电焊工)"},{"refno":"10077160815094923","refnamedesc":"marong77(电焊工)"},{"refno":"10078160815094923","refnamedesc":"marong78(电焊工)"},{"refno":"10079160815094923","refnamedesc":"marong79(电焊工)"},{"refno":"10080160815094923","refnamedesc":"marong80(电焊工)"},{"refno":"10081160815094923","refnamedesc":"marong81(电焊工)"},{"refno":"10082160815094923","refnamedesc":"marong82(电焊工)"},{"refno":"10083160815094923","refnamedesc":"marong83(电焊工)"},{"refno":"10084160815094923","refnamedesc":"marong84(电焊工)"},{"refno":"10085160815094923","refnamedesc":"marong85(电焊工)"},{"refno":"10086160815094923","refnamedesc":"marong86(电焊工)"},{"refno":"10087160815094923","refnamedesc":"marong87(电焊工)"},{"refno":"10088160815094923","refnamedesc":"marong88(电焊工)"},{"refno":"10089160815094923","refnamedesc":"marong89(电焊工)"},{"refno":"10090160815094923","refnamedesc":"marong90(电焊工)"},{"refno":"10091160815094923","refnamedesc":"marong91(电焊工)"},{"refno":"10092160815094923","refnamedesc":"marong92(电焊工)"},{"refno":"10093160815094923","refnamedesc":"marong93(电焊工)"},{"refno":"10094160815094923","refnamedesc":"marong94(电焊工)"},{"refno":"10095160815094923","refnamedesc":"marong95(电焊工)"},{"refno":"10096160815094923","refnamedesc":"marong96(电焊工)"},{"refno":"10097160815094923","refnamedesc":"marong97(电焊工)"},{"refno":"10098160815094923","refnamedesc":"marong98(电焊工)"},{"refno":"10099160815094923","refnamedesc":"marong99(电焊工)"},{"refno":"10100160815094923","refnamedesc":"marong100(电焊工)"},{"refno":"10101160815094923","refnamedesc":"marong101(电焊工)"},{"refno":"10102160815094923","refnamedesc":"marong102(电焊工)"},{"refno":"10103160815094923","refnamedesc":"marong103(电焊工)"},{"refno":"10104160815094923","refnamedesc":"marong104(电焊工)"},{"refno":"10105160815094923","refnamedesc":"marong105(电焊工)"},{"refno":"10106160815094923","refnamedesc":"marong106(电焊工)"},{"refno":"10107160815094923","refnamedesc":"marong107(电焊工)"},{"refno":"10108160815094923","refnamedesc":"marong108(电焊工)"},{"refno":"10109160815094923","refnamedesc":"marong109(电焊工)"},{"refno":"10110160815094923","refnamedesc":"marong110(电焊工)"},{"refno":"10111160815094923","refnamedesc":"marong111(电焊工)"},{"refno":"10112160815094923","refnamedesc":"marong112(电焊工)"},{"refno":"10113160815094923","refnamedesc":"marong113(电焊工)"},{"refno":"10114160815094923","refnamedesc":"marong114(电焊工)"},{"refno":"10115160815094923","refnamedesc":"marong115(电焊工)"},{"refno":"10116160815094923","refnamedesc":"marong116(电焊工)"},{"refno":"10117160815094923","refnamedesc":"marong117(电焊工)"},{"refno":"10118160815094923","refnamedesc":"marong118(电焊工)"},{"refno":"10119160815094923","refnamedesc":"marong119(电焊工)"},{"refno":"10120160815094923","refnamedesc":"marong120(电焊工)"},{"refno":"10121160815094923","refnamedesc":"marong121(电焊工)"},{"refno":"10122160815094923","refnamedesc":"marong122(电焊工)"},{"refno":"10123160815094923","refnamedesc":"marong123(电焊工)"},{"refno":"10124160815094923","refnamedesc":"marong124(电焊工)"},{"refno":"10125160815094923","refnamedesc":"marong125(电焊工)"},{"refno":"10126160815094923","refnamedesc":"marong126(电焊工)"},{"refno":"10127160815094923","refnamedesc":"marong127(电焊工)"},{"refno":"10128160815094923","refnamedesc":"marong128(电焊工)"},{"refno":"10129160815094923","refnamedesc":"marong129(电焊工)"},{"refno":"10130160815094923","refnamedesc":"marong130(电焊工)"},{"refno":"10131160815094923","refnamedesc":"marong131(电焊工)"},{"refno":"10132160815094923","refnamedesc":"marong132(电焊工)"},{"refno":"10133160815094923","refnamedesc":"marong133(电焊工)"},{"refno":"10134160815094923","refnamedesc":"marong134(电焊工)"},{"refno":"10135160815094923","refnamedesc":"marong135(电焊工)"},{"refno":"10136160815094923","refnamedesc":"marong136(电焊工)"},{"refno":"10137160815094923","refnamedesc":"marong137(电焊工)"},{"refno":"10138160815094923","refnamedesc":"marong138(电焊工)"},{"refno":"10139160815094923","refnamedesc":"marong139(电焊工)"},{"refno":"10140160815094923","refnamedesc":"marong140(电焊工)"},{"refno":"10141160815094923","refnamedesc":"marong141(电焊工)"},{"refno":"10142160815094923","refnamedesc":"marong142(电焊工)"},{"refno":"10143160815094923","refnamedesc":"marong143(电焊工)"},{"refno":"10144160815094923","refnamedesc":"marong144(电焊工)"},{"refno":"10145160815094923","refnamedesc":"marong145(电焊工)"},{"refno":"10146160815094923","refnamedesc":"marong146(电焊工)"},{"refno":"10147160815094923","refnamedesc":"marong147(电焊工)"},{"refno":"10148160815094923","refnamedesc":"marong148(电焊工)"},{"refno":"10149160815094923","refnamedesc":"marong149(电焊工)"},{"refno":"10150160815094923","refnamedesc":"marong150(电焊工)"},{"refno":"10151160815094923","refnamedesc":"marong151(电焊工)"},{"refno":"10152160815094923","refnamedesc":"marong152(电焊工)"},{"refno":"10153160815094923","refnamedesc":"marong153(电焊工)"},{"refno":"10154160815094923","refnamedesc":"marong154(电焊工)"},{"refno":"10155160815094923","refnamedesc":"marong155(电焊工)"},{"refno":"10156160815094923","refnamedesc":"marong156(电焊工)"},{"refno":"10157160815094923","refnamedesc":"marong157(电焊工)"},{"refno":"10158160815094923","refnamedesc":"marong158(电焊工)"},{"refno":"10159160815094923","refnamedesc":"marong159(电焊工)"},{"refno":"10160160815094923","refnamedesc":"marong160(电焊工)"},{"refno":"10161160815094923","refnamedesc":"marong161(电焊工)"},{"refno":"10162160815094923","refnamedesc":"marong162(电焊工)"},{"refno":"10163160815094923","refnamedesc":"marong163(电焊工)"},{"refno":"10164160815094923","refnamedesc":"marong164(电焊工)"},{"refno":"10165160815094923","refnamedesc":"marong165(电焊工)"},{"refno":"10166160815094923","refnamedesc":"marong166(电焊工)"},{"refno":"10167160815094923","refnamedesc":"marong167(电焊工)"},{"refno":"10168160815094923","refnamedesc":"marong168(电焊工)"},{"refno":"10169160815094923","refnamedesc":"marong169(电焊工)"},{"refno":"10170160815094923","refnamedesc":"marong170(电焊工)"},{"refno":"10171160815094923","refnamedesc":"marong171(电焊工)"},{"refno":"10172160815094923","refnamedesc":"marong172(电焊工)"},{"refno":"10173160815094923","refnamedesc":"marong173(电焊工)"},{"refno":"10174160815094923","refnamedesc":"marong174(电焊工)"},{"refno":"10175160815094923","refnamedesc":"marong175(电焊工)"},{"refno":"10176160815094923","refnamedesc":"marong176(电焊工)"},{"refno":"10177160815094923","refnamedesc":"marong177(电焊工)"},{"refno":"10178160815094923","refnamedesc":"marong178(电焊工)"},{"refno":"10179160815094923","refnamedesc":"marong179(电焊工)"},{"refno":"10180160815094923","refnamedesc":"marong180(电焊工)"},{"refno":"10181160815094923","refnamedesc":"marong181(电焊工)"},{"refno":"10182160815094923","refnamedesc":"marong182(电焊工)"},{"refno":"10183160815094923","refnamedesc":"marong183(电焊工)"},{"refno":"10184160815094923","refnamedesc":"marong184(电焊工)"},{"refno":"10185160815094923","refnamedesc":"marong185(电焊工)"},{"refno":"10186160815094923","refnamedesc":"marong186(电焊工)"},{"refno":"10187160815094923","refnamedesc":"marong187(电焊工)"},{"refno":"10188160815094923","refnamedesc":"marong188(电焊工)"},{"refno":"10189160815094923","refnamedesc":"marong189(电焊工)"},{"refno":"10190160815094923","refnamedesc":"marong190(电焊工)"},{"refno":"10191160815094923","refnamedesc":"marong191(电焊工)"},{"refno":"10192160815094923","refnamedesc":"marong192(电焊工)"},{"refno":"10193160815094923","refnamedesc":"marong193(电焊工)"},{"refno":"10194160815094923","refnamedesc":"marong194(电焊工)"},{"refno":"10195160815094923","refnamedesc":"marong195(电焊工)"},{"refno":"10196160815094923","refnamedesc":"marong196(电焊工)"},{"refno":"10197160815094923","refnamedesc":"marong197(电焊工)"},{"refno":"10198160815094923","refnamedesc":"marong198(电焊工)"},{"refno":"10199160815094923","refnamedesc":"marong199(电焊工)"},{"refno":"10200160815094923","refnamedesc":"marong200(电焊工)"},{"refno":"10201160815094923","refnamedesc":"marong201(电焊工)"},{"refno":"10202160815094923","refnamedesc":"marong202(电焊工)"},{"refno":"10203160815094923","refnamedesc":"marong203(电焊工)"},{"refno":"10204160815094923","refnamedesc":"marong204(电焊工)"},{"refno":"10205160815094923","refnamedesc":"marong205(电焊工)"},{"refno":"10206160815094923","refnamedesc":"marong206(电焊工)"},{"refno":"10207160815094923","refnamedesc":"marong207(电焊工)"},{"refno":"10208160815094923","refnamedesc":"marong208(电焊工)"},{"refno":"10209160815094923","refnamedesc":"marong209(电焊工)"},{"refno":"10210160815094923","refnamedesc":"marong210(电焊工)"},{"refno":"10211160815094923","refnamedesc":"marong211(电焊工)"},{"refno":"10212160815094923","refnamedesc":"marong212(电焊工)"},{"refno":"10213160815094923","refnamedesc":"marong213(电焊工)"},{"refno":"10214160815094923","refnamedesc":"marong214(电焊工)"},{"refno":"10215160815094923","refnamedesc":"marong215(电焊工)"},{"refno":"10216160815094923","refnamedesc":"marong216(电焊工)"},{"refno":"10217160815094923","refnamedesc":"marong217(电焊工)"},{"refno":"10218160815094923","refnamedesc":"marong218(电焊工)"},{"refno":"10219160815094923","refnamedesc":"marong219(电焊工)"},{"refno":"10220160815094923","refnamedesc":"marong220(电焊工)"},{"refno":"10221160815094923","refnamedesc":"marong221(电焊工)"},{"refno":"10222160815094923","refnamedesc":"marong222(电焊工)"},{"refno":"10223160815094923","refnamedesc":"marong223(电焊工)"},{"refno":"10224160815094923","refnamedesc":"marong224(电焊工)"},{"refno":"10225160815094923","refnamedesc":"marong225(电焊工)"},{"refno":"10226160815094923","refnamedesc":"marong226(电焊工)"},{"refno":"10227160815094923","refnamedesc":"marong227(电焊工)"},{"refno":"10228160815094923","refnamedesc":"marong228(电焊工)"},{"refno":"10229160815094923","refnamedesc":"marong229(电焊工)"},{"refno":"10230160815094923","refnamedesc":"marong230(电焊工)"},{"refno":"10231160815094923","refnamedesc":"marong231(电焊工)"},{"refno":"10232160815094923","refnamedesc":"marong232(电焊工)"},{"refno":"10233160815094923","refnamedesc":"marong233(电焊工)"},{"refno":"10234160815094923","refnamedesc":"marong234(电焊工)"},{"refno":"10235160815094923","refnamedesc":"marong235(电焊工)"},{"refno":"10236160815094923","refnamedesc":"marong236(电焊工)"},{"refno":"10237160815094923","refnamedesc":"marong237(电焊工)"},{"refno":"10238160815094923","refnamedesc":"marong238(电焊工)"},{"refno":"10239160815094923","refnamedesc":"marong239(电焊工)"},{"refno":"10240160815094923","refnamedesc":"marong240(电焊工)"},{"refno":"10241160815094923","refnamedesc":"marong241(电焊工)"},{"refno":"10242160815094923","refnamedesc":"marong242(电焊工)"},{"refno":"10243160815094923","refnamedesc":"marong243(电焊工)"},{"refno":"10244160815094923","refnamedesc":"marong244(电焊工)"},{"refno":"10245160815094923","refnamedesc":"marong245(电焊工)"},{"refno":"10246160815094923","refnamedesc":"marong246(电焊工)"},{"refno":"10247160815094923","refnamedesc":"marong247(电焊工)"},{"refno":"10248160815094923","refnamedesc":"marong248(电焊工)"},{"refno":"10249160815094923","refnamedesc":"marong249(电焊工)"},{"refno":"10250160815094923","refnamedesc":"marong250(电焊工)"},{"refno":"10251160815094923","refnamedesc":"marong251(电焊工)"},{"refno":"10252160815094923","refnamedesc":"marong252(电焊工)"},{"refno":"10253160815094923","refnamedesc":"marong253(电焊工)"},{"refno":"10254160815094923","refnamedesc":"marong254(电焊工)"},{"refno":"10255160815094923","refnamedesc":"marong255(电焊工)"},{"refno":"10256160815094923","refnamedesc":"marong256(电焊工)"},{"refno":"10257160815094923","refnamedesc":"marong257(电焊工)"},{"refno":"10258160815094923","refnamedesc":"marong258(电焊工)"},{"refno":"10259160815094923","refnamedesc":"marong259(电焊工)"},{"refno":"10260160815094923","refnamedesc":"marong260(电焊工)"},{"refno":"10261160815094923","refnamedesc":"marong261(电焊工)"},{"refno":"10262160815094923","refnamedesc":"marong262(电焊工)"},{"refno":"10263160815094923","refnamedesc":"marong263(电焊工)"},{"refno":"10264160815094923","refnamedesc":"marong264(电焊工)"},{"refno":"10265160815094923","refnamedesc":"marong265(电焊工)"},{"refno":"10266160815094923","refnamedesc":"marong266(电焊工)"},{"refno":"10267160815094923","refnamedesc":"marong267(电焊工)"},{"refno":"10268160815094923","refnamedesc":"marong268(电焊工)"},{"refno":"10269160815094923","refnamedesc":"marong269(电焊工)"},{"refno":"10270160815094923","refnamedesc":"marong270(电焊工)"},{"refno":"10271160815094923","refnamedesc":"marong271(电焊工)"},{"refno":"10272160815094923","refnamedesc":"marong272(电焊工)"},{"refno":"10273160815094923","refnamedesc":"marong273(电焊工)"},{"refno":"10274160815094923","refnamedesc":"marong274(电焊工)"},{"refno":"10275160815094923","refnamedesc":"marong275(电焊工)"},{"refno":"10276160815094923","refnamedesc":"marong276(电焊工)"},{"refno":"10277160815094923","refnamedesc":"marong277(电焊工)"},{"refno":"10278160815094923","refnamedesc":"marong278(电焊工)"},{"refno":"10279160815094923","refnamedesc":"marong279(电焊工)"},{"refno":"10280160815094923","refnamedesc":"marong280(电焊工)"},{"refno":"10281160815094923","refnamedesc":"marong281(电焊工)"},{"refno":"10282160815094923","refnamedesc":"marong282(电焊工)"},{"refno":"10283160815094923","refnamedesc":"marong283(电焊工)"},{"refno":"10284160815094923","refnamedesc":"marong284(电焊工)"},{"refno":"10285160815094923","refnamedesc":"marong285(电焊工)"},{"refno":"10286160815094923","refnamedesc":"marong286(电焊工)"},{"refno":"10287160815094923","refnamedesc":"marong287(电焊工)"},{"refno":"10288160815094923","refnamedesc":"marong288(电焊工)"},{"refno":"10289160815094923","refnamedesc":"marong289(电焊工)"},{"refno":"10290160815094923","refnamedesc":"marong290(电焊工)"},{"refno":"10291160815094923","refnamedesc":"marong291(电焊工)"},{"refno":"10292160815094923","refnamedesc":"marong292(电焊工)"},{"refno":"10293160815094923","refnamedesc":"marong293(电焊工)"},{"refno":"10294160815094923","refnamedesc":"marong294(电焊工)"},{"refno":"10295160815094923","refnamedesc":"marong295(电焊工)"},{"refno":"10296160815094923","refnamedesc":"marong296(电焊工)"},{"refno":"10297160815094923","refnamedesc":"marong297(电焊工)"},{"refno":"10298160815094923","refnamedesc":"marong298(电焊工)"},{"refno":"10299160815094923","refnamedesc":"marong299(电焊工)"},{"refno":"10300160815094923","refnamedesc":"marong300(电焊工)"},{"refno":"10301160815094923","refnamedesc":"marong301(电焊工)"},{"refno":"10302160815094923","refnamedesc":"marong302(电焊工)"},{"refno":"10303160815094923","refnamedesc":"marong303(电焊工)"},{"refno":"10304160815094923","refnamedesc":"marong304(电焊工)"},{"refno":"10305160815094923","refnamedesc":"marong305(电焊工)"},{"refno":"10306160815094923","refnamedesc":"marong306(电焊工)"},{"refno":"10307160815094923","refnamedesc":"marong307(电焊工)"},{"refno":"10308160815094923","refnamedesc":"marong308(电焊工)"},{"refno":"10309160815094923","refnamedesc":"marong309(电焊工)"},{"refno":"10310160815094923","refnamedesc":"marong310(电焊工)"},{"refno":"10311160815094923","refnamedesc":"marong311(电焊工)"},{"refno":"10312160815094923","refnamedesc":"marong312(电焊工)"},{"refno":"10313160815094923","refnamedesc":"marong313(电焊工)"},{"refno":"10314160815094923","refnamedesc":"marong314(电焊工)"},{"refno":"10315160815094923","refnamedesc":"marong315(电焊工)"},{"refno":"10316160815094923","refnamedesc":"marong316(电焊工)"},{"refno":"10317160815094923","refnamedesc":"marong317(电焊工)"},{"refno":"10318160815094923","refnamedesc":"marong318(电焊工)"},{"refno":"10319160815094923","refnamedesc":"marong319(电焊工)"},{"refno":"10320160815094923","refnamedesc":"marong320(电焊工)"},{"refno":"10321160815094923","refnamedesc":"marong321(电焊工)"},{"refno":"10322160815094923","refnamedesc":"marong322(电焊工)"},{"refno":"10323160815094923","refnamedesc":"marong323(电焊工)"},{"refno":"10324160815094923","refnamedesc":"marong324(电焊工)"},{"refno":"10325160815094923","refnamedesc":"marong325(电焊工)"},{"refno":"10326160815094923","refnamedesc":"marong326(电焊工)"},{"refno":"10327160815094923","refnamedesc":"marong327(电焊工)"},{"refno":"10328160815094923","refnamedesc":"marong328(电焊工)"},{"refno":"10329160815094923","refnamedesc":"marong329(电焊工)"},{"refno":"10330160815094923","refnamedesc":"marong330(电焊工)"},{"refno":"10331160815094923","refnamedesc":"marong331(电焊工)"},{"refno":"10332160815094923","refnamedesc":"marong332(电焊工)"},{"refno":"10333160815094923","refnamedesc":"marong333(电焊工)"},{"refno":"10334160815094923","refnamedesc":"marong334(电焊工)"},{"refno":"10335160815094923","refnamedesc":"marong335(电焊工)"},{"refno":"10336160815094923","refnamedesc":"marong336(电焊工)"},{"refno":"10337160815094923","refnamedesc":"marong337(电焊工)"},{"refno":"10338160815094923","refnamedesc":"marong338(电焊工)"},{"refno":"10339160815094923","refnamedesc":"marong339(电焊工)"},{"refno":"10340160815094923","refnamedesc":"marong340(电焊工)"},{"refno":"10341160815094923","refnamedesc":"marong341(电焊工)"},{"refno":"10342160815094923","refnamedesc":"marong342(电焊工)"},{"refno":"10343160815094923","refnamedesc":"marong343(电焊工)"},{"refno":"10344160815094923","refnamedesc":"marong344(电焊工)"},{"refno":"10345160815094923","refnamedesc":"marong345(电焊工)"},{"refno":"10346160815094923","refnamedesc":"marong346(电焊工)"},{"refno":"10347160815094923","refnamedesc":"marong347(电焊工)"},{"refno":"10348160815094923","refnamedesc":"marong348(电焊工)"},{"refno":"10349160815094923","refnamedesc":"marong349(电焊工)"},{"refno":"10350160815094923","refnamedesc":"marong350(电焊工)"},{"refno":"10351160815094923","refnamedesc":"marong351(电焊工)"},{"refno":"10352160815094923","refnamedesc":"marong352(电焊工)"},{"refno":"10353160815094923","refnamedesc":"marong353(电焊工)"},{"refno":"10354160815094923","refnamedesc":"marong354(电焊工)"},{"refno":"10355160815094923","refnamedesc":"marong355(电焊工)"},{"refno":"10356160815094923","refnamedesc":"marong356(电焊工)"},{"refno":"10357160815094923","refnamedesc":"marong357(电焊工)"},{"refno":"10358160815094923","refnamedesc":"marong358(电焊工)"},{"refno":"10359160815094923","refnamedesc":"marong359(电焊工)"},{"refno":"10360160815094923","refnamedesc":"marong360(电焊工)"},{"refno":"10361160815094923","refnamedesc":"marong361(电焊工)"},{"refno":"10362160815094923","refnamedesc":"marong362(电焊工)"},{"refno":"10363160815094923","refnamedesc":"marong363(电焊工)"},{"refno":"10364160815094923","refnamedesc":"marong364(电焊工)"},{"refno":"10365160815094923","refnamedesc":"marong365(电焊工)"},{"refno":"10366160815094923","refnamedesc":"marong366(电焊工)"},{"refno":"10367160815094923","refnamedesc":"marong367(电焊工)"},{"refno":"10368160815094923","refnamedesc":"marong368(电焊工)"},{"refno":"10369160815094923","refnamedesc":"marong369(电焊工)"},{"refno":"10370160815094923","refnamedesc":"marong370(电焊工)"},{"refno":"10371160815094923","refnamedesc":"marong371(电焊工)"},{"refno":"10372160815094923","refnamedesc":"marong372(电焊工)"},{"refno":"10373160815094923","refnamedesc":"marong373(电焊工)"},{"refno":"10374160815094923","refnamedesc":"marong374(电焊工)"},{"refno":"10375160815094923","refnamedesc":"marong375(电焊工)"},{"refno":"10376160815094923","refnamedesc":"marong376(电焊工)"},{"refno":"10377160815094923","refnamedesc":"marong377(电焊工)"},{"refno":"10378160815094923","refnamedesc":"marong378(电焊工)"},{"refno":"10379160815094923","refnamedesc":"marong379(电焊工)"},{"refno":"10380160815094923","refnamedesc":"marong380(电焊工)"},{"refno":"10381160815094923","refnamedesc":"marong381(电焊工)"},{"refno":"10382160815094923","refnamedesc":"marong382(电焊工)"},{"refno":"10383160815094923","refnamedesc":"marong383(电焊工)"},{"refno":"10384160815094923","refnamedesc":"marong384(电焊工)"},{"refno":"10385160815094923","refnamedesc":"marong385(电焊工)"},{"refno":"10386160815094923","refnamedesc":"marong386(电焊工)"},{"refno":"10387160815094923","refnamedesc":"marong387(电焊工)"},{"refno":"10388160815094923","refnamedesc":"marong388(电焊工)"},{"refno":"10389160815094923","refnamedesc":"marong389(电焊工)"},{"refno":"10390160815094923","refnamedesc":"marong390(电焊工)"},{"refno":"10391160815094923","refnamedesc":"marong391(电焊工)"},{"refno":"10392160815094923","refnamedesc":"marong392(电焊工)"},{"refno":"10393160815094923","refnamedesc":"marong393(电焊工)"},{"refno":"10394160815094923","refnamedesc":"marong394(电焊工)"},{"refno":"10395160815094923","refnamedesc":"marong395(电焊工)"},{"refno":"10396160815094923","refnamedesc":"marong396(电焊工)"},{"refno":"10397160815094923","refnamedesc":"marong397(电焊工)"},{"refno":"10398160815094923","refnamedesc":"marong398(电焊工)"},{"refno":"10399160815094923","refnamedesc":"marong399(电焊工)"},{"refno":"10400160815094923","refnamedesc":"marong400(电焊工)"},{"refno":"10401160815094923","refnamedesc":"marong401(电焊工)"},{"refno":"10402160815094923","refnamedesc":"marong402(电焊工)"},{"refno":"10403160815094923","refnamedesc":"marong403(电焊工)"},{"refno":"10404160815094923","refnamedesc":"marong404(电焊工)"},{"refno":"10405160815094923","refnamedesc":"marong405(电焊工)"},{"refno":"10406160815094923","refnamedesc":"marong406(电焊工)"},{"refno":"10407160815094923","refnamedesc":"marong407(电焊工)"},{"refno":"10408160815094923","refnamedesc":"marong408(电焊工)"},{"refno":"10409160815094923","refnamedesc":"marong409(电焊工)"},{"refno":"10410160815094923","refnamedesc":"marong410(电焊工)"},{"refno":"10411160815094923","refnamedesc":"marong411(电焊工)"},{"refno":"10412160815094923","refnamedesc":"marong412(电焊工)"},{"refno":"10413160815094923","refnamedesc":"marong413(电焊工)"},{"refno":"10414160815094923","refnamedesc":"marong414(电焊工)"},{"refno":"10415160815094923","refnamedesc":"marong415(电焊工)"},{"refno":"10416160815094923","refnamedesc":"marong416(电焊工)"},{"refno":"10417160815094923","refnamedesc":"marong417(电焊工)"},{"refno":"10418160815094923","refnamedesc":"marong418(电焊工)"},{"refno":"10419160815094923","refnamedesc":"marong419(电焊工)"},{"refno":"10420160815094923","refnamedesc":"marong420(电焊工)"},{"refno":"10421160815094923","refnamedesc":"marong421(电焊工)"},{"refno":"10422160815094923","refnamedesc":"marong422(电焊工)"},{"refno":"10423160815094923","refnamedesc":"marong423(电焊工)"},{"refno":"10424160815094923","refnamedesc":"marong424(电焊工)"},{"refno":"10425160815094923","refnamedesc":"marong425(电焊工)"},{"refno":"10426160815094923","refnamedesc":"marong426(电焊工)"},{"refno":"10427160815094923","refnamedesc":"marong427(电焊工)"},{"refno":"10428160815094923","refnamedesc":"marong428(电焊工)"},{"refno":"10429160815094923","refnamedesc":"marong429(电焊工)"},{"refno":"10430160815094923","refnamedesc":"marong430(电焊工)"},{"refno":"10431160815094923","refnamedesc":"marong431(电焊工)"},{"refno":"10432160815094923","refnamedesc":"marong432(电焊工)"},{"refno":"10433160815094923","refnamedesc":"marong433(电焊工)"},{"refno":"10434160815094923","refnamedesc":"marong434(电焊工)"},{"refno":"10435160815094923","refnamedesc":"marong435(电焊工)"},{"refno":"10436160815094923","refnamedesc":"marong436(电焊工)"},{"refno":"10437160815094923","refnamedesc":"marong437(电焊工)"},{"refno":"10438160815094923","refnamedesc":"marong438(电焊工)"},{"refno":"10439160815094923","refnamedesc":"marong439(电焊工)"},{"refno":"10440160815094923","refnamedesc":"marong440(电焊工)"},{"refno":"10441160815094923","refnamedesc":"marong441(电焊工)"},{"refno":"10442160815094923","refnamedesc":"marong442(电焊工)"},{"refno":"10443160815094923","refnamedesc":"marong443(电焊工)"},{"refno":"10444160815094923","refnamedesc":"marong444(电焊工)"},{"refno":"10445160815094923","refnamedesc":"marong445(电焊工)"},{"refno":"10446160815094923","refnamedesc":"marong446(电焊工)"},{"refno":"10447160815094923","refnamedesc":"marong447(电焊工)"},{"refno":"10448160815094923","refnamedesc":"marong448(电焊工)"},{"refno":"10449160815094923","refnamedesc":"marong449(电焊工)"},{"refno":"10450160815094923","refnamedesc":"marong450(电焊工)"},{"refno":"10451160815094923","refnamedesc":"marong451(电焊工)"},{"refno":"10452160815094923","refnamedesc":"marong452(电焊工)"},{"refno":"10453160815094923","refnamedesc":"marong453(电焊工)"},{"refno":"10454160815094923","refnamedesc":"marong454(电焊工)"},{"refno":"10455160815094923","refnamedesc":"marong455(电焊工)"},{"refno":"10456160815094923","refnamedesc":"marong456(电焊工)"},{"refno":"10457160815094923","refnamedesc":"marong457(电焊工)"},{"refno":"10458160815094923","refnamedesc":"marong458(电焊工)"},{"refno":"10459160815094923","refnamedesc":"marong459(电焊工)"},{"refno":"10460160815094923","refnamedesc":"marong460(电焊工)"},{"refno":"10461160815094923","refnamedesc":"marong461(电焊工)"},{"refno":"10462160815094923","refnamedesc":"marong462(电焊工)"},{"refno":"10463160815094923","refnamedesc":"marong463(电焊工)"},{"refno":"10464160815094923","refnamedesc":"marong464(电焊工)"},{"refno":"10465160815094923","refnamedesc":"marong465(电焊工)"},{"refno":"10466160815094923","refnamedesc":"marong466(电焊工)"},{"refno":"10467160815094923","refnamedesc":"marong467(电焊工)"},{"refno":"10468160815094923","refnamedesc":"marong468(电焊工)"},{"refno":"10469160815094923","refnamedesc":"marong469(电焊工)"},{"refno":"10470160815094923","refnamedesc":"marong470(电焊工)"},{"refno":"10471160815094923","refnamedesc":"marong471(电焊工)"},{"refno":"10472160815094923","refnamedesc":"marong472(电焊工)"},{"refno":"10473160815094923","refnamedesc":"marong473(电焊工)"},{"refno":"10474160815094923","refnamedesc":"marong474(电焊工)"},{"refno":"10475160815094923","refnamedesc":"marong475(电焊工)"},{"refno":"10476160815094923","refnamedesc":"marong476(电焊工)"},{"refno":"10477160815094923","refnamedesc":"marong477(电焊工)"},{"refno":"10478160815094923","refnamedesc":"marong478(电焊工)"},{"refno":"10479160815094923","refnamedesc":"marong479(电焊工)"},{"refno":"10480160815094923","refnamedesc":"marong480(电焊工)"},{"refno":"10481160815094923","refnamedesc":"marong481(电焊工)"},{"refno":"10482160815094923","refnamedesc":"marong482(电焊工)"},{"refno":"10483160815094923","refnamedesc":"marong483(电焊工)"},{"refno":"10484160815094923","refnamedesc":"marong484(电焊工)"},{"refno":"10485160815094923","refnamedesc":"marong485(电焊工)"},{"refno":"10486160815094923","refnamedesc":"marong486(电焊工)"},{"refno":"10487160815094923","refnamedesc":"marong487(电焊工)"},{"refno":"10488160815094923","refnamedesc":"marong488(电焊工)"},{"refno":"10489160815094923","refnamedesc":"marong489(电焊工)"},{"refno":"10490160815094923","refnamedesc":"marong490(电焊工)"},{"refno":"10491160815094923","refnamedesc":"marong491(电焊工)"},{"refno":"10492160815094923","refnamedesc":"marong492(电焊工)"},{"refno":"10493160815094923","refnamedesc":"marong493(电焊工)"},{"refno":"10494160815094923","refnamedesc":"marong494(电焊工)"},{"refno":"10495160815094923","refnamedesc":"marong495(电焊工)"},{"refno":"10496160815094923","refnamedesc":"marong496(电焊工)"},{"refno":"10497160815094923","refnamedesc":"marong497(电焊工)"},{"refno":"10498160815094923","refnamedesc":"marong498(电焊工)"},{"refno":"10499160815094923","refnamedesc":"marong499(电焊工)"},{"refno":"10500160815094923","refnamedesc":"marong500(电焊工)"},{"refno":"10501160815094923","refnamedesc":"marong501(电焊工)"},{"refno":"10502160815094923","refnamedesc":"marong502(电焊工)"},{"refno":"10503160815094923","refnamedesc":"marong503(电焊工)"},{"refno":"10504160815094923","refnamedesc":"marong504(电焊工)"},{"refno":"10505160815094923","refnamedesc":"marong505(电焊工)"},{"refno":"10506160815094923","refnamedesc":"marong506(电焊工)"},{"refno":"10507160815094923","refnamedesc":"marong507(电焊工)"},{"refno":"10508160815094923","refnamedesc":"marong508(电焊工)"},{"refno":"10509160815094923","refnamedesc":"marong509(电焊工)"},{"refno":"10510160815094923","refnamedesc":"marong510(电焊工)"},{"refno":"10511160815094923","refnamedesc":"marong511(电焊工)"},{"refno":"10512160815094923","refnamedesc":"marong512(电焊工)"},{"refno":"10513160815094923","refnamedesc":"marong513(电焊工)"},{"refno":"10514160815094923","refnamedesc":"marong514(电焊工)"},{"refno":"10515160815094923","refnamedesc":"marong515(电焊工)"},{"refno":"10516160815094923","refnamedesc":"marong516(电焊工)"},{"refno":"10517160815094923","refnamedesc":"marong517(电焊工)"},{"refno":"10518160815094923","refnamedesc":"marong518(电焊工)"},{"refno":"10519160815094923","refnamedesc":"marong519(电焊工)"},{"refno":"10520160815094923","refnamedesc":"marong520(电焊工)"},{"refno":"10521160815094923","refnamedesc":"marong521(电焊工)"},{"refno":"10522160815094923","refnamedesc":"marong522(电焊工)"},{"refno":"10523160815094923","refnamedesc":"marong523(电焊工)"},{"refno":"10524160815094923","refnamedesc":"marong524(电焊工)"},{"refno":"10525160815094923","refnamedesc":"marong525(电焊工)"},{"refno":"10526160815094923","refnamedesc":"marong526(电焊工)"},{"refno":"10527160815094923","refnamedesc":"marong527(电焊工)"},{"refno":"10528160815094923","refnamedesc":"marong528(电焊工)"},{"refno":"10529160815094923","refnamedesc":"marong529(电焊工)"},{"refno":"10530160815094923","refnamedesc":"marong530(电焊工)"},{"refno":"10531160815094923","refnamedesc":"marong531(电焊工)"},{"refno":"10532160815094923","refnamedesc":"marong532(电焊工)"},{"refno":"10533160815094923","refnamedesc":"marong533(电焊工)"},{"refno":"10534160815094923","refnamedesc":"marong534(电焊工)"},{"refno":"10535160815094923","refnamedesc":"marong535(电焊工)"},{"refno":"10536160815094923","refnamedesc":"marong536(电焊工)"},{"refno":"10537160815094923","refnamedesc":"marong537(电焊工)"},{"refno":"10538160815094923","refnamedesc":"marong538(电焊工)"},{"refno":"10539160815094923","refnamedesc":"marong539(电焊工)"},{"refno":"10540160815094923","refnamedesc":"marong540(电焊工)"},{"refno":"10541160815094923","refnamedesc":"marong541(电焊工)"},{"refno":"10542160815094923","refnamedesc":"marong542(电焊工)"},{"refno":"10543160815094923","refnamedesc":"marong543(电焊工)"},{"refno":"10544160815094923","refnamedesc":"marong544(电焊工)"},{"refno":"10545160815094923","refnamedesc":"marong545(电焊工)"},{"refno":"10546160815094923","refnamedesc":"marong546(电焊工)"},{"refno":"10547160815094923","refnamedesc":"marong547(电焊工)"},{"refno":"10548160815094923","refnamedesc":"marong548(电焊工)"},{"refno":"10549160815094923","refnamedesc":"marong549(电焊工)"},{"refno":"10550160815094923","refnamedesc":"marong550(电焊工)"},{"refno":"10551160815094923","refnamedesc":"marong551(电焊工)"},{"refno":"10552160815094923","refnamedesc":"marong552(电焊工)"},{"refno":"10553160815094923","refnamedesc":"marong553(电焊工)"},{"refno":"10554160815094923","refnamedesc":"marong554(电焊工)"},{"refno":"10555160815094923","refnamedesc":"marong555(电焊工)"},{"refno":"10556160815094923","refnamedesc":"marong556(电焊工)"},{"refno":"10557160815094923","refnamedesc":"marong557(电焊工)"},{"refno":"10558160815094923","refnamedesc":"marong558(电焊工)"},{"refno":"10559160815094923","refnamedesc":"marong559(电焊工)"},{"refno":"10560160815094923","refnamedesc":"marong560(电焊工)"},{"refno":"10561160815094923","refnamedesc":"marong561(电焊工)"},{"refno":"10562160815094923","refnamedesc":"marong562(电焊工)"},{"refno":"10563160815094923","refnamedesc":"marong563(电焊工)"},{"refno":"10564160815094923","refnamedesc":"marong564(电焊工)"},{"refno":"10565160815094923","refnamedesc":"marong565(电焊工)"},{"refno":"10566160815094923","refnamedesc":"marong566(电焊工)"},{"refno":"10567160815094923","refnamedesc":"marong567(电焊工)"},{"refno":"10568160815094923","refnamedesc":"marong568(电焊工)"},{"refno":"10569160815094923","refnamedesc":"marong569(电焊工)"},{"refno":"10570160815094923","refnamedesc":"marong570(电焊工)"},{"refno":"10571160815094923","refnamedesc":"marong571(电焊工)"},{"refno":"10572160815094923","refnamedesc":"marong572(电焊工)"},{"refno":"10573160815094923","refnamedesc":"marong573(电焊工)"},{"refno":"10574160815094923","refnamedesc":"marong574(电焊工)"},{"refno":"10575160815094923","refnamedesc":"marong575(电焊工)"},{"refno":"10576160815094923","refnamedesc":"marong576(电焊工)"},{"refno":"10577160815094923","refnamedesc":"marong577(电焊工)"},{"refno":"10578160815094923","refnamedesc":"marong578(电焊工)"},{"refno":"10579160815094923","refnamedesc":"marong579(电焊工)"},{"refno":"10580160815094923","refnamedesc":"marong580(电焊工)"},{"refno":"10581160815094923","refnamedesc":"marong581(电焊工)"},{"refno":"10582160815094923","refnamedesc":"marong582(电焊工)"},{"refno":"10583160815094923","refnamedesc":"marong583(电焊工)"},{"refno":"10584160815094923","refnamedesc":"marong584(电焊工)"},{"refno":"10585160815094923","refnamedesc":"marong585(电焊工)"},{"refno":"10586160815094923","refnamedesc":"marong586(电焊工)"},{"refno":"10587160815094923","refnamedesc":"marong587(电焊工)"},{"refno":"10588160815094923","refnamedesc":"marong588(电焊工)"},{"refno":"10589160815094923","refnamedesc":"marong589(电焊工)"},{"refno":"10590160815094923","refnamedesc":"marong590(电焊工)"},{"refno":"10591160815094923","refnamedesc":"marong591(电焊工)"},{"refno":"10592160815094923","refnamedesc":"marong592(电焊工)"},{"refno":"10593160815094923","refnamedesc":"marong593(电焊工)"},{"refno":"10594160815094923","refnamedesc":"marong594(电焊工)"},{"refno":"10595160815094923","refnamedesc":"marong595(电焊工)"},{"refno":"10596160815094923","refnamedesc":"marong596(电焊工)"},{"refno":"10597160815094923","refnamedesc":"marong597(电焊工)"},{"refno":"10598160815094923","refnamedesc":"marong598(电焊工)"},{"refno":"10599160815094923","refnamedesc":"marong599(电焊工)"},{"refno":"10600160815094923","refnamedesc":"marong600(电焊工)"},{"refno":"10601160815094923","refnamedesc":"marong601(电焊工)"},{"refno":"10602160815094923","refnamedesc":"marong602(电焊工)"},{"refno":"10603160815094923","refnamedesc":"marong603(电焊工)"},{"refno":"10604160815094923","refnamedesc":"marong604(电焊工)"},{"refno":"10605160815094923","refnamedesc":"marong605(电焊工)"},{"refno":"10606160815094923","refnamedesc":"marong606(电焊工)"},{"refno":"10607160815094923","refnamedesc":"marong607(电焊工)"},{"refno":"10608160815094923","refnamedesc":"marong608(电焊工)"},{"refno":"10609160815094923","refnamedesc":"marong609(电焊工)"},{"refno":"10610160815094923","refnamedesc":"marong610(电焊工)"},{"refno":"10611160815094923","refnamedesc":"marong611(电焊工)"},{"refno":"10612160815094923","refnamedesc":"marong612(电焊工)"},{"refno":"10613160815094923","refnamedesc":"marong613(电焊工)"},{"refno":"10614160815094923","refnamedesc":"marong614(电焊工)"},{"refno":"10615160815094923","refnamedesc":"marong615(电焊工)"},{"refno":"10616160815094923","refnamedesc":"marong616(电焊工)"},{"refno":"10617160815094923","refnamedesc":"marong617(电焊工)"},{"refno":"10618160815094923","refnamedesc":"marong618(电焊工)"},{"refno":"10619160815094923","refnamedesc":"marong619(电焊工)"},{"refno":"10620160815094923","refnamedesc":"marong620(电焊工)"},{"refno":"10621160815094923","refnamedesc":"marong621(电焊工)"},{"refno":"10622160815094923","refnamedesc":"marong622(电焊工)"},{"refno":"10623160815094923","refnamedesc":"marong623(电焊工)"},{"refno":"10624160815094923","refnamedesc":"marong624(电焊工)"},{"refno":"10625160815094923","refnamedesc":"marong625(电焊工)"},{"refno":"10626160815094923","refnamedesc":"marong626(电焊工)"},{"refno":"10627160815094923","refnamedesc":"marong627(电焊工)"},{"refno":"10628160815094923","refnamedesc":"marong628(电焊工)"},{"refno":"10629160815094923","refnamedesc":"marong629(电焊工)"},{"refno":"10630160815094923","refnamedesc":"marong630(电焊工)"},{"refno":"10631160815094923","refnamedesc":"marong631(电焊工)"},{"refno":"10632160815094923","refnamedesc":"marong632(电焊工)"},{"refno":"10633160815094923","refnamedesc":"marong633(电焊工)"},{"refno":"10634160815094923","refnamedesc":"marong634(电焊工)"},{"refno":"10635160815094923","refnamedesc":"marong635(电焊工)"},{"refno":"10636160815094923","refnamedesc":"marong636(电焊工)"},{"refno":"10637160815094923","refnamedesc":"marong637(电焊工)"},{"refno":"10638160815094923","refnamedesc":"marong638(电焊工)"},{"refno":"10639160815094923","refnamedesc":"marong639(电焊工)"},{"refno":"10640160815094923","refnamedesc":"marong640(电焊工)"},{"refno":"10641160815094923","refnamedesc":"marong641(电焊工)"},{"refno":"10642160815094923","refnamedesc":"marong642(电焊工)"},{"refno":"10643160815094923","refnamedesc":"marong643(电焊工)"},{"refno":"10644160815094923","refnamedesc":"marong644(电焊工)"},{"refno":"10645160815094923","refnamedesc":"marong645(电焊工)"},{"refno":"10646160815094923","refnamedesc":"marong646(电焊工)"},{"refno":"10647160815094923","refnamedesc":"marong647(电焊工)"},{"refno":"10648160815094923","refnamedesc":"marong648(电焊工)"},{"refno":"10649160815094923","refnamedesc":"marong649(电焊工)"},{"refno":"10650160815094923","refnamedesc":"marong650(电焊工)"},{"refno":"10651160815094923","refnamedesc":"marong651(电焊工)"},{"refno":"10652160815094923","refnamedesc":"marong652(电焊工)"},{"refno":"10653160815094923","refnamedesc":"marong653(电焊工)"},{"refno":"10654160815094923","refnamedesc":"marong654(电焊工)"},{"refno":"10655160815094923","refnamedesc":"marong655(电焊工)"},{"refno":"10656160815094923","refnamedesc":"marong656(电焊工)"},{"refno":"10657160815094923","refnamedesc":"marong657(电焊工)"},{"refno":"10658160815094923","refnamedesc":"marong658(电焊工)"},{"refno":"10659160815094923","refnamedesc":"marong659(电焊工)"},{"refno":"10660160815094923","refnamedesc":"marong660(电焊工)"}];
+//			var resultArr = getIntersection(arrA,arrB);
+			var tempArrA = [];
+			var tempArrB = [];
+			arrA.each(function(val){
+				tempArrA.push(val.refno);
+			});
+			arrB.each(function(val){
+				tempArrB.push(val.refno);
+			});
+//			console.log(tempArrA);
+//			console.log(tempArrB);
+//			var resultArr = Array.intersect(tempArrA, tempArrB);
+//			console.log(resultArr);
+//			function testFunc(){
+//				getIntersection(arrA,arrB);
+//				Array.intersect(tempArrA, tempArrB);
+//			}
+//			testFuncTime(testFunc);
+			var tStart = new Date();
+			var oSB = new StringBuffer();
+			var str = "";
+			for(var i in arrA){
+//				console.log("function" != typeof(arrB[i]));
+				if("function" != typeof(arrA[i])){
+//					console.log(arrB[i].refnamedesc);
+//					oSB.append(arrA[i].refnamedesc);
+					str += arrA[i].refnamedesc;
+				}
+			}
+//			oSB.toString();
+//			var sRst = oSB.getString();
+			var tEnd = new Date();
+			console.log(str);
+			console.log(tStart.getTime());
+			console.log(tEnd.getTime());
+			console.log("花费时间："+(tEnd.getTime()-tStart.getTime())+"ms");
+		}
+	});
+	
+	
+//	var oSB = new StringBuffer();
+//	tStart = new Date();
+//	for(var i=0;i<10000;i++){
+//		oSB.append("text");
+//	}
+//	var sRst = oSB.toString();
+//	tEnd = new Date();
+//	console.log(tStart.getTime());
+//	console.log(tEnd.getTime());
+//	console.log("StringBuffer 拼接10000个字符串 花费时间："+(tEnd.getTime()-tStart.getTime())+"秒");
+});
+
+
+function getIntersection(a,b){
+	var myHash = new HashTable();
+	var intersectionArr = [];
+	a.each(function(val){
+		myHash.add(val.refno, val.refnamedesc);
+	});
+	b.each(function(val){
+		if(!myHash.add(val.refno, val.refnamedesc)){
+			intersectionArr.push(val);
+		}
+	});
+	return intersectionArr;
+}
+</script>

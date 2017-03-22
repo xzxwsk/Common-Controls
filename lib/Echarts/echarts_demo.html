@@ -1,0 +1,121 @@
+<link rel="stylesheet" type="text/css" href="lib/Echarts/demo.css"  />
+<div class="container pdtb20 font16 other_charts_ls"><span>曲线图</span> &nbsp; <a href="lib/Echarts/echarts_stack_demo.html" class="other_charts">柱状图</a> &nbsp; <a href="lib/Echarts/echarts_pie_demo.html" class="other_charts">饼图</a></div>
+<div class="container">
+	<p>官方文档地址：<a href="http://echarts.baidu.com/api.html#echarts" target="_blank">http://echarts.baidu.com/api.html#echarts</a></p>
+	<p>官方demo地址：<a href="http://echarts.baidu.com/demo.html#bar-stack" target="_blank">http://echarts.baidu.com/demo.html#bar-stack</a></p>
+	<div id="EchartsBox"></div>
+</div>
+
+<script type="text/javascript" src="lib/Echarts/js/echarts-all-3.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#EchartsBox").height($("#EchartsBox").parent().parent().height() - 66);
+	var lineChart = echarts.init(document.getElementById('EchartsBox'));
+	var option = {
+	    title: {
+	    	text: '趋势图',
+	        show: false
+	    },
+	    toolbox: {
+	        show: false
+	    },
+	    visualMap: {
+	        show: false
+	    },
+	    xAxis:  {
+	        type: 'category',
+	        boundaryGap: false,
+	        data: ['6月1日', '6月2日', '6月3日', '6月4日', '6月5日', '6月6日', '6月7日']
+	    },
+	    yAxis: {
+	        type: 'value',
+	        axisLabel: {
+	            formatter: '{value}'
+	        }
+	    },
+	    grid: {//位置
+	        left: 0,
+	        top: 5,
+	        width:"94%",
+	        height:"97%",
+	        borderWidth: 0,
+	        show: true,
+	        containLabel: true,
+	        backgroundColor: "rgba(255,255,255,0.2)"
+	    },
+	    series: [
+	        {
+	            name:'课程',
+	            type:'line',
+	            smooth: true,
+	            symbol: "none",
+	            itemStyle:{
+	            	normal: {
+	            		lineStyle:{  
+                        	color:'#63A0D8'  //线颜色
+                    	}
+	            	}
+	            },
+	            data: [3000, 2400,2000,4200,1500,3000,2500]
+	        },
+	        {
+	            name:'考试',
+	            type:'line',
+	            smooth: true,
+	            symbol: "none",
+	            itemStyle:{
+	            	normal: {
+	            		lineStyle:{  
+                        	color:'#EF8A46' //线颜色
+                       	}
+	            	}
+	            },
+	            data: [1200, 2300,4000,4800,2500,2000,3500]
+	        }
+	    ],
+	    tooltip: {
+	        trigger: 'axis',
+	        formatter: '{b}<br /><span class="tooltip_legend" style="background-color:#63A0D8"></span>{a0}: {c0}<br /><span class="tooltip_legend" style="background-color:#EF8A46"></span>{a1}: {c1}'//鼠标热点提示框模板
+	    },
+	    color:['#63A0D8','#EF8A46'],//图例颜色
+	    legend:{//图例
+	        show:true,
+	        right:0,
+	        top:0,
+	        orient:'vertical',
+	        borderWidth:0,
+	        data:[
+	            {
+	                name:'课程',
+	                icon: 'pin',
+	                textStyle:{
+	                    fontSize:12,
+	                    fontWeight:'bolder',
+	                    color:'#63A0D8'//图例字体颜色
+	                }
+	            },
+	            {
+	                name:'考试',
+	                icon: 'pin',
+	                textStyle:{
+	                    fontSize:12,
+	                    fontWeight:'bolder',
+	                    color:'#EF8A46'//图例字体颜色
+	                }
+	            }
+	        ]
+	    }
+	};
+	lineChart.showLoading({text: '正在努力加载中...'});
+	setTimeout(function(){
+		lineChart.setOption(option);
+		lineChart.hideLoading();
+	},1000);
+	
+	$(".other_charts").click(function(e){
+		e.preventDefault();
+		var href = $(this).attr("href");
+		$("#page-inner").load(href);
+	});
+});
+</script>

@@ -1,0 +1,82 @@
+<style type="text/css">
+.qrcode_con{margin:20px auto 0;width: 200px}	
+</style>
+
+<p>&nbsp;</p>
+<p class="text-center"><button id="exportQrcodeBtn">批量导出二维码</button></p>
+<div id="qrcodeCon" class="text-center qrcode_con"></div>
+
+<script type="text/javascript" src="lib/qrcode/zip.js"></script>
+<script type="text/javascript" src="lib/qrcode/zip-fs.js"></script>
+<script type="text/javascript" src="lib/qrcode/mime-types.js"></script>
+<script type="text/javascript" src="lib/qrcode/dataview.js"></script>
+<script type="text/javascript" src="lib/qrcode/config.js"></script>
+
+<script type="text/javascript" src="lib/qrcode/utf.js"></script>
+<script type="text/javascript" src="lib/qrcode/qrcode.js"></script>
+<script type="text/javascript" src="lib/qrcode/jquery.qrcode.js"></script>
+<script type="text/javascript">
+var makeCode = function makeCode (str, callback) {
+//	var div = document.createElement("div");//缓存图片不显示
+//	var div = document.getElementById("qrcodeCon");
+//	var qrcode = new QRCode(div, {
+//		width : 200,
+//		height : 200,
+//		colorDark : "#000000",
+//	    colorLight : "#ffffff",
+//		correctLevel : QRCode.CorrectLevel.H,  //L|M|Q|H
+////		callback: callback
+//	});
+//	qrcode.clear();
+//	qrcode.makeCode(str);
+	$('#qrcodeCon').qrcode({
+	 	 render    : "canvas",
+	     text    : str,
+	     width : "200",               //二维码的宽度
+	     height : "200",              //二维码的高度
+	     background : "#ffffff",       //二维码的后景色
+	     foreground : "#000000",        //二维码的前景色
+	     src: 'lib/qrcode/img/1.jpg',   //二维码中间的图片
+	     callback: callback
+	 });
+};
+var base64Img2Blob = function base64Img2Blob(code){
+	var parts = code.split(';base64,');
+	var contentType = parts[0].split(':')[1];
+	var raw = window.atob(parts[1]);
+	var rawLength = raw.length;
+
+	var uInt8Array = new Uint8Array(rawLength);
+
+	for (var i = 0; i < rawLength; ++i) {
+		uInt8Array[i] = raw.charCodeAt(i);
+	}
+
+	return new Blob([uInt8Array], {type: contentType});
+};
+$(function(){
+	$("#exportQrcodeBtn").click(function(){
+		var zipFs = new zip.fs.FS();
+		var str = '{"qrCodeId":"c71c5947-5100-49a4-915d-704d87468ca2","flag":11}'; 
+		makeCode(str, function(canvas){
+			var src = canvas.toDataURL("image/png");
+			console.log(src);return;
+			var blob = base64Img2Blob(src);
+			var fileName = "1.png";
+			zipFs.root.addBlob(fileName, blob);
+			zipFs.exportBlob(function(zippedBlob) {
+				var blobURL = URL.createObjectURL(zippedBlob);
+				var downloadButton = document.createElement("a");
+				var clickEvent;
+				clickEvent = document.createEvent("MouseEvent");
+				clickEvent.initEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+				downloadButton.download = "xxx.zip";
+				downloadButton.href = blobURL;
+				downloadButton.dispatchEvent(clickEvent);
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!--<link type="text/css" rel="stylesheet" href="lib/pagination.css" />-->
+<link type="text/css" rel="stylesheet" href="lib/paginationjs.css" />
+<div class="container preview">
+	<p>插件官方地址：<a href="http://plugins.jquery.com/project/pagination" target="_blank">http://plugins.jquery.com/project/pagination</a><span class="text-warning">已停止维护</span></p>
+	<p>本地分页插件官方地址：<a href="http://paginationjs.com/index.html" target="_blank">http://paginationjs.com/index.html</a></p>
+	<br/>
+	<h3>jquery.pagination.js分页插件参数说明：</h3>
+	<table class="table" width="100%">
+		<thead>
+		<tr>
+		<th scope="col">参数名</th>
+		<th scope="col">描述</th>
+		<th scope="col">参数值</th>
+		</tr>
+		<thead>		
+		<tbody>
+		<tr>
+		<td>maxentries</span></td>
+		<td>总条目数</span></td>
+		<td>必选参数，整数</td>
+		</tr>
+		<tr>
+		<td>items_per_page</td>
+		<td>每页显示的条目数</td>
+		<td>可选参数，默认是10</td>
+		</tr>
+		<tr>
+		<td>num_display_entries</td>
+		<td>连续分页主体部分显示的分页条目数</td>
+		<td>可选参数，默认是10</td>
+		</tr>
+		<tr>
+		<td>current_page</td>
+		<td>当前选中的页面</td>
+		<td>可选参数，默认是0，表示第1页</td>
+		</tr>
+		<tr>
+		<td>num_edge_entries</td>
+		<td>两侧显示的首尾分页的条目数</td>
+		<td>可选参数，默认是0</td>
+		</tr>
+		<tr>
+		<td>link_to</td>
+		<td>分页的链接</td>
+		<td>字符串，可选参数，默认是"#"</td>
+		</tr>
+		<tr>
+		<td>prev_text</td>
+		<td>“前一页”分页按钮上显示的文字</td>
+		<td>字符串参数，可选，默认是"Prev"</td>
+		</tr>
+		<tr>
+		<td>next_text</td>
+		<td>“下一页”分页按钮上显示的文字</td>
+		<td>字符串参数，可选，默认是"Next"</td>
+		</tr>
+		<tr>
+		<td>ellipse_text</td>
+		<td>省略的页数用什么文字表示</td>
+		<td>可选字符串参数，默认是"…"</td>
+		</tr>
+		<tr>
+		<td>prev_show_always</td>
+		<td>是否显示“前一页”分页按钮</td>
+		<td>布尔型，可选参数，默认为true，即显示“前一页”按钮</td>
+		</tr>
+		<tr>
+		<td>next_show_always</td>
+		<td>是否显示“下一页”分页按钮</td>
+		<td>布尔型，可选参数，默认为true，即显示“下一页”按钮</td>
+		</tr>
+		<tr>
+		<td>callback</td>
+		<td>回调函数</td>
+		<td>当点击链接的时候此函数被调用，此函数接受两个参数，新一页的<span>id</span>和<span>pagination</span>容器（一个<span>DOM</span>元素）。如果回调函数返回<span>false</span>，则<span>pagination</span>事件停止执行</td>
+		</tr>
+		</tbody>
+	</table>
+	<br/>
+	<pre><div><span style="color:#0000ff">&lt;</span><span style="color:#800000">script </span><span style="color:#ff0000">src</span><span style="color:#0000ff">="jquery.js"</span><span style="color:#ff0000"> type</span><span style="color:#0000ff">="text/javascript"</span><span style="color:#0000ff">&gt;&lt;/</span><span style="color:#800000">script</span><span style="color:#0000ff">&gt;</span><span style="color:#000000"> 
+</span><span style="color:#0000ff">&lt;</span><span style="color:#800000">script </span><span style="color:#ff0000">src</span><span style="color:#0000ff">="jquery.pagination.js"</span><span style="color:#ff0000"> type</span><span style="color:#0000ff">="text/javascript"</span><span style="color:#0000ff">&gt;&lt;/</span><span style="color:#800000">script</span><span style="color:#0000ff">&gt;</span><span style="color:#000000"> 
+</span><span style="color:#000000"> 
+</span><span style="color:#0000ff">&lt;</span><span style="color:#800000">link </span><span style="color:#ff0000">href</span><span style="color:#0000ff">="pagination.css"</span><span style="color:#ff0000"> rel</span><span style="color:#0000ff">="stylesheet"</span><span style="color:#ff0000"> type</span><span style="color:#0000ff">="text/css"</span><span style="color:#ff0000"> </span><span style="color:#0000ff">/&gt;</span><span style="color:#000000"> 
+
+</span><span style="color:#0000ff">&lt;</span><span style="color:#800000">script </span><span style="color:#ff0000">language</span><span style="color:#0000ff">="javascript"</span><span style="color:#ff0000"> type</span><span style="color:#0000ff">="text/javascript"</span><span style="color:#0000ff">&gt;</span><span style="background-color:#f5f5f5; color:#000000"> 
+  </span><span style="background-color:#f5f5f5; color:#0000ff">var</span><span style="background-color:#f5f5f5; color:#000000"> orderby </span><span style="background-color:#f5f5f5; color:#000000">=</span><span style="background-color:#f5f5f5; color:#000000"> </span><span style="background-color:#f5f5f5; color:#000000">""</span><span style="background-color:#f5f5f5; color:#000000">; </span><span style="background-color:#f5f5f5; color:#008000">//</span><span style="background-color:#f5f5f5; color:#008000">进行排序的依据 </span><span style="background-color:#f5f5f5; color:#008000">
+</span><span style="background-color:#f5f5f5; color:#000000">  $(document).ready(</span><span style="background-color:#f5f5f5; color:#0000ff">function</span><span style="background-color:#f5f5f5; color:#000000">() { 
+  &nbsp;&nbsp;&nbsp;&nbsp;InitData(</span><span style="background-color:#f5f5f5; color:#000000">0</span><span style="background-color:#f5f5f5; color:#000000">); </span><span style="background-color:#f5f5f5; color:#008000">//</span><span style="background-color:#f5f5f5; color:#008000">初始化数据 </span><span style="background-color:#f5f5f5; color:#008000">
+</span><span style="background-color:#f5f5f5; color:#000000">  }); 
+  </span><span style="background-color:#f5f5f5; color:#008000">//</span><span style="background-color:#f5f5f5; color:#008000">这个事件是在翻页时候用的 </span><span style="background-color:#f5f5f5; color:#008000">
+</span><span style="background-color:#f5f5f5; color:#000000">  </span><span style="background-color:#f5f5f5; color:#0000ff">function</span><span style="background-color:#f5f5f5; color:#000000"> pageselectCallback(page_id, jq) { 
+  &nbsp;&nbsp;&nbsp;&nbsp;InitData(page_id); 
+  } 
+  </span><span style="background-color:#f5f5f5; color:#0000ff">function</span><span style="background-color:#f5f5f5; color:#000000"> InitData(pageIndex) { 
+  </span><span style="background-color:#f5f5f5; color:#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;var</span><span style="background-color:#f5f5f5; color:#000000"> tbody </span><span style="background-color:#f5f5f5; color:#000000">=</span><span style="background-color:#f5f5f5; color:#000000"> </span><span style="background-color:#f5f5f5; color:#000000">""</span><span style="background-color:#f5f5f5; color:#000000">; </span><span style="background-color:#f5f5f5; color:#008000">//</span><span style="background-color:#f5f5f5; color:#008000">声明表格中body部分 </span><span style="background-color:#f5f5f5; color:#008000">
+</span><span style="background-color:#f5f5f5; color:#000000">  &nbsp;&nbsp;&nbsp;&nbsp;$.ajax({ </span><span style="background-color:#f5f5f5; color:#008000">//</span><span style="background-color:#f5f5f5; color:#008000">这里使用到Jquery的ajax方法</span><span style="background-color:#f5f5f5; color:#008000">
+</span><span style="background-color:#f5f5f5; color:#000000">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: </span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000">POST</span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000">, 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataType: </span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000">json</span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000">, 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url: </span><span style="background-color:#f5f5f5; color:#000000">'</span><span style="background-color:#f5f5f5; color:#000000">GetData.ashx</span><span style="background-color:#f5f5f5; color:#000000">'</span><span style="background-color:#f5f5f5; color:#000000">, </span><span style="background-color:#f5f5f5; color:#008000">//</span><span style="background-color:#f5f5f5; color:#008000">请求的处理数据 </span><span style="background-color:#f5f5f5; color:#008000">
+</span><span style="background-color:#f5f5f5; color:#000000">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data: </span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000">pageIndex=</span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000"> </span><span style="background-color:#f5f5f5; color:#000000">+</span><span style="background-color:#f5f5f5; color:#000000"> (pageIndex </span><span style="background-color:#f5f5f5; color:#000000">+</span><span style="background-color:#f5f5f5; color:#000000"> </span><span style="background-color:#f5f5f5; color:#000000">1</span><span style="background-color:#f5f5f5; color:#000000">) </span><span style="background-color:#f5f5f5; color:#000000">+</span><span style="background-color:#f5f5f5; color:#000000"> </span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000">&amp;sortType=</span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000"> </span><span style="background-color:#f5f5f5; color:#000000">+</span><span style="background-color:#f5f5f5; color:#000000"> orderby, 
+  </span><span style="background-color:#f5f5f5; color:#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</span><span style="background-color:#f5f5f5; color:#008000">传入的参数，第一个参数就是分页的页数，第二个参数为排序的依据 </span><span style="background-color:#f5f5f5; color:#008000">
+</span><span style="background-color:#f5f5f5; color:#000000">  </span><span style="background-color:#f5f5f5; color:#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</span><span style="background-color:#f5f5f5; color:#008000">下面的操作就是成功返回数据以后，进行数据的绑定 </span><span style="background-color:#f5f5f5; color:#008000">
+</span><span style="background-color:#f5f5f5; color:#000000">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;success: </span><span style="background-color:#f5f5f5; color:#0000ff">function</span><span style="background-color:#f5f5f5; color:#000000">(data) { 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(</span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000">#linkTable tr:gt(0)</span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000">).remove(); 
+  </span><span style="background-color:#f5f5f5; color:#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var</span><span style="background-color:#f5f5f5; color:#000000"> myData </span><span style="background-color:#f5f5f5; color:#000000">=</span><span style="background-color:#f5f5f5; color:#000000"> data.Products; 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$.each(myData, </span><span style="background-color:#f5f5f5; color:#0000ff">function</span><span style="background-color:#f5f5f5; color:#000000">(i, n) { 
+  </span><span style="background-color:#f5f5f5; color:#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var</span><span style="background-color:#f5f5f5; color:#000000"> trs </span><span style="background-color:#f5f5f5; color:#000000">=</span><span style="background-color:#f5f5f5; color:#000000"> </span><span style="background-color:#f5f5f5; color:#000000">""</span><span style="background-color:#f5f5f5; color:#000000">; 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;trs </span><span style="background-color:#f5f5f5; color:#000000">+=</span><span style="background-color:#f5f5f5; color:#000000"> </span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000">&lt;tr&gt;&lt;td align='center'&gt;</span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000"> </span><span style="background-color:#f5f5f5; color:#000000">+</span><span style="background-color:#f5f5f5; color:#000000"> n.ProductName </span><span style="background-color:#f5f5f5; color:#000000">+</span><span style="background-color:#f5f5f5; color:#000000"> </span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000">&lt;/td&gt;&lt;td&gt;</span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000"> </span><span style="background-color:#f5f5f5; color:#000000">+</span><span style="background-color:#f5f5f5; color:#000000"> 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n.QuantityPerUnit </span><span style="background-color:#f5f5f5; color:#000000">+</span><span style="background-color:#f5f5f5; color:#000000"> </span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000">&lt;/td&gt;&lt;/tr&gt;</span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000">; 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tbody </span><span style="background-color:#f5f5f5; color:#000000">+=</span><span style="background-color:#f5f5f5; color:#000000"> trs; 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}); 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(</span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000">#linkTable</span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000">).append(tbody); 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} 
+  &nbsp;&nbsp;&nbsp;&nbsp;}); 
+  </span><span style="background-color:#f5f5f5; color:#008000">&nbsp;&nbsp;&nbsp;&nbsp;//</span><span style="background-color:#f5f5f5; color:#008000">加入分页的绑定 </span><span style="background-color:#f5f5f5; color:#008000">
+</span><span style="background-color:#f5f5f5; color:#000000">  &nbsp;&nbsp;&nbsp;&nbsp;$(</span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000">#Pagination</span><span style="background-color:#f5f5f5; color:#000000">"</span><span style="background-color:#f5f5f5; color:#000000">).pagination(</span><span style="background-color:#f5f5f5; color:#000000">&lt;%=</span><span style="background-color:#f5f5f5; color:#000000">pageCount </span><span style="background-color:#f5f5f5; color:#000000">%&gt;</span><span style="background-color:#f5f5f5; color:#000000">, { 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;callback: pageselectCallback, 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prev_text: </span><span style="background-color:#f5f5f5; color:#000000">'</span><span style="background-color:#f5f5f5; color:#000000">&lt; 上一页</span><span style="background-color:#f5f5f5; color:#000000">'</span><span style="background-color:#f5f5f5; color:#000000">, 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next_text: </span><span style="background-color:#f5f5f5; color:#000000">'</span><span style="background-color:#f5f5f5; color:#000000">下一页 &gt;</span><span style="background-color:#f5f5f5; color:#000000">'</span><span style="background-color:#f5f5f5; color:#000000">, 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;items_per_page: </span><span style="background-color:#f5f5f5; color:#000000">20</span><span style="background-color:#f5f5f5; color:#000000">, 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num_display_entries: </span><span style="background-color:#f5f5f5; color:#000000">6</span><span style="background-color:#f5f5f5; color:#000000">, 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current_page: pageIndex, 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num_edge_entries: </span><span style="background-color:#f5f5f5; color:#000000">2</span><span style="background-color:#f5f5f5; color:#000000"> 
+  &nbsp;&nbsp;&nbsp;&nbsp;}); 
+  } 
+</span><span style="color:#0000ff">&lt;/</span><span style="color:#800000">script</span><span style="color:#0000ff">&gt;</span><span style="color:#000000"> 
+
+</span><span style="color:#0000ff">&lt;</span><span style="color:#800000">div</span><span style="color:#0000ff">&gt;</span><span style="color:#000000"> 
+</span><span style="color:#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&lt;</span><span style="color:#800000">table </span><span style="color:#ff0000">id</span><span style="color:#0000ff">="linkTable"</span><span style="color:#ff0000"> cellpadding</span><span style="color:#0000ff">="6"</span><span style="color:#ff0000"> cellspacing</span><span style="color:#0000ff">="1"</span><span style="color:#ff0000"> align</span><span style="color:#0000ff">="left"</span><span style="color:#ff0000"> class</span><span style="color:#0000ff">="tablesorter"</span><span style="color:#ff0000"> style</span><span style="color:#0000ff">="width:400px;margin:0 0 20px 5px;"</span><span style="color:#0000ff">&gt;</span><span style="color:#000000"> 
+</span><span style="color:#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;</span><span style="color:#800000">thead</span><span style="color:#0000ff">&gt;</span><span style="color:#000000"> 
+</span><span style="color:#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;</span><span style="color:#800000">tr </span><span style="color:#ff0000">class</span><span style="color:#0000ff">="tableHeader"</span><span style="color:#ff0000"> align</span><span style="color:#0000ff">="center"</span><span style="color:#0000ff">&gt;</span><span style="color:#000000"> 
+</span><span style="color:#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;</span><span style="color:#800000">th </span><span style="color:#ff0000">style</span><span style="color:#0000ff">="width:200px; text-align:center;"</span><span style="color:#0000ff">&gt;</span><span style="color:#000000"> 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;产品名称 
+</span><span style="color:#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/</span><span style="color:#800000">th</span><span style="color:#0000ff">&gt;</span><span style="color:#000000"> 
+</span><span style="color:#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;</span><span style="color:#800000">th </span><span style="color:#ff0000">style</span><span style="color:#0000ff">="width:200px; text-align:center"</span><span style="color:#0000ff">&gt;</span><span style="color:#000000"> 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;产品单价 
+</span><span style="color:#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/</span><span style="color:#800000">th</span><span style="color:#0000ff">&gt;</span><span style="color:#000000"> 
+</span><span style="color:#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/</span><span style="color:#800000">tr</span><span style="color:#0000ff">&gt;</span><span style="color:#000000"> 
+</span><span style="color:#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/</span><span style="color:#800000">thead</span><span style="color:#0000ff">&gt;</span><span style="color:#000000"> 
+</span><span style="color:#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/</span><span style="color:#800000">table</span><span style="color:#0000ff">&gt;</span><span style="color:#000000"> 
+</span><span style="color:#0000ff">&lt;/</span><span style="color:#800000">div</span><span style="color:#0000ff">&gt;</span><span style="color:#000000"> 
+</span><span style="color:#0000ff">&lt;</span><span style="color:#800000">div </span><span style="color:#ff0000">id</span><span style="color:#0000ff">="Pagination"</span><span style="color:#ff0000"> class</span><span style="color:#0000ff">="digg"</span><span style="color:#0000ff">&gt;&lt;/</span><span style="color:#800000">div</span><span style="color:#0000ff">&gt;</span><span style="color:#000000"> </span></div></pre>
+<br/><br/>
+<h3>paginationjs.js分页插件参数说明：</h3>
+<table class="table bootstrap-table">
+    <thead>
+    <tr>
+        <th>Property </th>
+        <th> Type </th>
+        <th> Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>pageNumber </td>
+        <td> number </td>
+        <td> The selected page number</td>
+    </tr>
+    <tr>
+        <td>pageRange </td>
+        <td> number </td>
+        <td> Visible page number range</td>
+    </tr>
+    <tr>
+        <td>pageSize </td>
+        <td> number </td>
+        <td> Entries of per page</td>
+    </tr>
+    <tr>
+        <td>totalPage </td>
+        <td> number </td>
+        <td> Total page</td>
+    </tr>
+    <tr>
+        <td>totalNumber </td>
+        <td> number </td>
+        <td> Total entries</td>
+    </tr>
+    <tr>
+        <td>el </td>
+        <td> jQuery object </td>
+        <td> Pagination element</td>
+    </tr>
+    <tr>
+        <td>direction </td>
+        <td> number </td>
+        <td> Pagination direction, <code>-1</code> means forward, <code>1</code> means backward, <code>0</code> means current is at initialization.</td>
+    </tr>
+    </tbody>
+</table>
+<pre>
+&lt;link type="text/css" rel="stylesheet" href="lib/paginationjs.css" />
+&lt;script type="text/javascript" src="lib/paginationjs.min.js">&lt;/script>
+//本地分页
+$('#Pagination').pagination({
+    dataSource: function(done) {
+	    $.ajax({
+	        type: 'GET',
+	        url: "testArr.json",
+	        success: function(response) {
+	            done(response);
+	        }
+	    });
+	},
+    locator: 'data.cus_vuserlist',
+    pageSize: 5,
+    callback: function(data, pagination) {
+		var myData = data; 
+		var tbody = "";
+		$.each(myData, function(i, n) { 
+		    var trs = ""; 
+			trs += "<tr><td align='center'>" + n.refno + "</td><td>" 
+				+ n.refnamedesc + "</td></tr>"; 
+		    tbody += trs; 
+		}); 
+		$("#linkTable").html(tbody); 
+    }
+});
+//服务端分页
+$('#Pagination').pagination({
+    dataSource: "testArr.json",
+    locator: 'data.cus_vuserlist',
+    totalNumber: 4991,
+    pageSize: 5,
+    callback: function(data, pagination) {
+		var myData = data; 
+		var tbody = "";
+		$.each(myData, function(i, n) { 
+		    var trs = ""; 
+			trs += "<tr><td align='center'>" + n.refno + "</td><td>" 
+				+ n.refnamedesc + "</td></tr>"; 
+		    tbody += trs; 
+		}); 
+		$("#linkTable").html(tbody); 
+    }
+});
+</pre>
+</div>
+
+<div> 
+    <table id="linkTable" class="table"> 
+        <thead> 
+            <tr> 
+                <th class="text-center">编号</th> 
+                <th>名称</th> 
+            </tr> 
+        </thead> 
+    </table> 
+</div> 
+<div id="Pagination" class="pagination yahoo2"></div> 
+<!--<script type="text/javascript" src="lib/jquery.pagination.js"></script>-->
+<script type="text/javascript" src="lib/paginationjs.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(document).ready(function() { 
+		//InitData(0);
+		InitDataLocal();
+	}); 
+});
+function pageselectCallback(page_id, jq) { 
+    InitData(page_id); 
+} 
+function InitData(pageIndex) { 
+    var tbody = "";
+	$.ajax({
+		type: "get", 
+		dataType: "json", 
+		url: 'testArr.json',
+		data: "pageIndex=" + (pageIndex + 1), 
+		success: function(data) { 
+			$("#linkTable tr:gt(0)").remove(); 
+			var myData = data.data.cus_vuserlist; 
+			$.each(myData, function(i, n) { 
+			    var trs = ""; 
+				trs += "<tr><td align='center'>" + n.refno + "</td><td>" 
+					+ n.refnamedesc + "</td></tr>"; 
+			    tbody += trs; 
+			}); 
+			$("#linkTable").append(tbody); 
+	    } 
+	}); 
+	//加入分页的绑定 
+	$("#Pagination").pagination(4991, { 
+		callback: pageselectCallback, 
+		prev_text: '< 上一页', 
+		next_text: '下一页 >', 
+	    items_per_page: 20, 
+	    num_display_entries: 6, 
+	    current_page: pageIndex, 
+	    num_edge_entries: 2 
+	}); 
+}
+
+function InitDataLocal(){
+	$('#Pagination').pagination({
+		//dataSource: "testArr.json",
+	    dataSource: function(done) {
+		    $.ajax({
+		        type: 'GET',
+		        url: "testArr.json",
+		        success: function(response) {
+		            done(response);
+		        }
+		    });
+		},
+		className: 'paginationjs-theme-blue',
+	    locator: 'data.cus_vuserlist',
+	    //totalNumber: 4991,
+	    pageSize: 20,
+	    callback: function(data, pagination) {
+			var myData = data; 
+			var tbody = "";
+			$.each(myData, function(i, n) { 
+			    var trs = ""; 
+				trs += "<tr><td align='center'>" + n.refno + "</td><td>" 
+					+ n.refnamedesc + "</td></tr>"; 
+			    tbody += trs; 
+			}); 
+			$("#linkTable").html(tbody); 
+	    }
+	});
+}
+</script>

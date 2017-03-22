@@ -1,0 +1,34 @@
+<style type="text/css">
+.pdtb20{padding-top: 20px;padding-bottom: 20px;}
+.font16{font-size: 16px;}
+.container>a{display: inline-block;vertical-align: middle;text-decoration: none;}
+.container>a:hover, .container>a:focus{color:#666;cursor:default;}
+.container>a.link{text-decoration: underline;}
+.container>a.link:hover, .container>a.link:focus{color:#097B1B;cursor:pointer;}
+</style>
+<div class="container pdtb20 font16 other_ls">
+	<a href="lib/imgCrop/ngImgCrop/imgCrop.html">ng-img-crop</a> &nbsp; 
+	<a href="lib/imgCrop/jQuery新浪微博头像裁切预览代码/index.html" class="link">jQuery新浪微博头像裁切</a> &nbsp; 
+	<a href="lib/imgCrop/crop_rotation/test.html" class="link">crop_rotation</a> &nbsp; 
+	<a href="lib/imgCrop/Jcrop/test.html" class="link">jQuery JCrop</a> &nbsp; 
+	<a href="lib/webuploader-0.1.5/examples/cropper/index.html" class="link">webuploader_cropper</a>
+</div>
+<div class="container">
+	<iframe src="lib/imgCrop/ngImgCrop/imgCrop.html" id="imgCropFrame" scrolling="no" frameborder="0" width="100%" height="800"></iframe>
+</div>
+<script type="text/javascript">
+$(function(){
+	$(".container>a").click(function(e){
+		e.preventDefault();
+		if(-1 != $(this).attr("class").indexOf("link")){
+			$(".container>a").addClass("link");
+			$(this).removeClass("link");
+			var href = $(this).attr("href");
+			$("#imgCropFrame").attr("src", href);
+		}
+	});
+});
+function setFrameH(h){
+	$("#imgCropFrame").height(h);
+}
+</script>

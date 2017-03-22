@@ -1,0 +1,15 @@
+<div class="container">
+	<br/>
+	<pre>
+   &lt;script type="text/javascript" src="lib/ajax_package.js"></script&gt;<br/>
+   postData(type, url, params, callback, async)
+   备注：基于jquery请求对所有请求做对应的封装。每个页面需要先引用jquery.js
+ * @param type  0：get, 1：post, 2：getJSON(跨域问题,只提供get方式)。
+ * @param url 提交地址,绝对全路径。
+ * @param params 请求参数(为了方便这里用字符串组装方式提供).格式："key="+key +"&mac="+mac 。
+ * @param callback 回调函数。这里多个请求时
+ * @param async true：异步, false ：同步。
+	</pre>
+</div>
+
+<script type="text/javascript" src="lib/util/ajax_package.js"></script>

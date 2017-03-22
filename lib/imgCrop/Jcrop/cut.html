@@ -1,0 +1,246 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../../lib/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="css/jquery.Jcrop.min.css" />
+<title>jquery Jcrop图片剪裁</title>
+<!--<style type="text/css">
+#cropImg {display: none;max-width: 500px;max-height: 500px;}
+.progress{display:none;margin-top:20px;margin-bottom:0;}
+</style>-->
+</head>
+
+<body>
+<div class="container">
+	<form enctype="multipart/form-data" method="post" name="fileForm" id="fileForm">
+		<div class="row">
+			<input type="file" name="file_upload" id="file_upload" />
+		</div>
+	</form>
+	<div class="row">
+		<div class="progress" style="display:none;margin-top:20px;margin-bottom:0;">
+		  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+		    <span class="sr-only">0% Complete</span>
+		  </div>
+		</div>
+	</div>
+	<form name="dataForm" id="dataForm" method="post">
+		<div class="row">
+			<br /> <img id="cropImg" style="display: none;max-width: 500px;max-height: 500px;" />
+			<input type="hidden" name="x" id="x" />
+			<input type="hidden" name="y" id="y" />
+			<input type="hidden" name="width" id="width" />
+			<input type="hidden" name="height" id="height" />
+			<input type="hidden" name="filename" id="filename" />
+			<input type="hidden" name="callback" id="callback" />
+			<input type="hidden" name="key" id="key" />
+		</div>
+	</form>
+</div>
+	
+<script type="text/javascript" src="../../../jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="js/jquery.form.min.js"></script>
+<script type="text/javascript" src="js/jquery.Jcrop.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	var si = null,
+	serverUrl = "http://192.168.1.106:8081",
+	jcrop_api = null,
+	urlOpt = getUrlParam(),
+	options = jQuery.extend({}, {
+		aspectRatio : 1 / 1,
+		allowSelect : true,
+		allowResize : true,
+		allowMove : true,
+		boxWidth : 500,
+		boxHeight : 500,
+		minSize : [ 80, 80 ],
+		maxSize : [ 350, 350 ],
+		onSelect : setSelectArea
+	}, urlOpt),
+	_ImgType = urlOpt.ImgType ? urlOpt.ImgType : ["gif", "jpeg", "jpg", "bmp", "png"],
+	_imgTypeAccept = "";//文件限制类型
+	
+	for(var i in _ImgType){
+    	_imgTypeAccept += "image/"+_ImgType[i];
+    	if(i < _ImgType.length-1)
+    		_imgTypeAccept += ",";
+    }
+	//初始化设置文件类型限制，参数
+    $("#file_upload").attr("accept",_imgTypeAccept);
+	$("#callback").val(options.url);
+	$("#key").val(options.key);
+	
+	//上传图片
+	var fileUploadAjaxFormOptions = {
+		type: "POST",
+		dataType : "json",
+		url : serverUrl+"/imagecut/saveImage",
+		beforeSubmit : function() {
+			console.log("before");
+			$(".progress").show();//初始化进度条
+			var n = 0;
+			si = setInterval(function(){
+				if(n < 99){
+					n++;
+					$(".progress-bar").width(n+"%");
+					$(".sr-only").text(n+"% Complete");
+				}
+			},500);
+		},
+		success : function(info) {
+			console.log("success");
+			console.log(info);
+			if (info.status == "error") {
+				alert("上传失败!");
+			} else {
+//				console.log(JSON.stringify(info));
+				$(".progress-bar").width("100%");//设置进度条并清除计时器
+				clearInterval(si);
+				si = null;
+				$("#filename").val(info.file_name);//设置返回文件名
+				
+				if (jcrop_api) {
+					jcrop_api.destroy();
+					jcrop_api = null;
+				}
+				$('#cropImg').removeAttr("style");
+				$("#cropImg").attr("src", info.url);//预览文件
+				$('#cropImg').css("max-width", urlOpt.boxWidth);//设置缩放大小
+				$('#cropImg').css("max-height", urlOpt.boxHeight);
+				var imgTemp = new Image();
+				imgTemp.src = info.url;
+				imgTemp.onload = function(){					
+					//获取图片缩放比例
+					var ratio = Math.max(1, this.width/$('#cropImg').width());
+					
+					$('#cropImg').show();
+					setTimeout(function(){
+						$(".progress").fadeOut();
+					},1000);
+					//设置图片缩放后的大小，以供截图插件占用比例
+					$('#cropImg').width($('#cropImg').width());
+					$('#cropImg').height($('#cropImg').height());
+					$('#cropImg').data("ratio", ratio);//缓存比例
+	
+					jcrop_api = $.Jcrop('#cropImg', options);//初始化截图插件
+					//parent.setIframe($("body").height());//设置iframe高度为页面内容高度
+				}
+			}
+		},
+		failure : function(info) {
+			alert("网络连接失败，请稍后再试!");
+		}
+	}
+	$('#fileForm').ajaxForm(fileUploadAjaxFormOptions);
+	//选中文件时上传
+	$("#file_upload").change(function(){
+		$('#fileForm').submit();
+	});
+	
+	/*
+	$("#file_upload").uploadPreview({
+		Img : "cropImg",
+		ImgType: _ImgType,
+		Callback : function() {
+			if (jcrop_api) {
+				jcrop_api.destroy();
+				jcrop_api = null;
+			}
+			$('#cropImg').removeAttr("style");
+			$('#cropImg').css("max-width", urlOpt.boxWidth);
+			$('#cropImg').css("max-height", urlOpt.boxHeight);
+			var imgTemp = new Image();
+			imgTemp.src = $("#"+this.Img).attr("src");
+			imgTemp.onload = function(){
+				var ratio = Math.max(1, this.width/$('#cropImg').width());
+				
+				$('#cropImg').show();
+				$('#cropImg').width($('#cropImg').width());
+				$('#cropImg').height($('#cropImg').height());
+				$('#cropImg').data("ratio", ratio);
+
+				//$("#realWidth").val($('#cropImg').width());
+				//$("#realHeight").val($('#cropImg').height());
+				
+				jcrop_api = $.Jcrop('#cropImg', options);
+				//jcrop_api.setSelect(getRandom(jcrop_api));
+				//jcrop_api.focus();
+				parent.setIframe($("body").height());
+			}
+		}
+	});
+	*/
+	
+	//点击确定时提交截图参数
+	$('#dataForm').ajaxForm({
+		dataType : "json",
+		method : "post",
+		url : serverUrl+"/imagecut/cutImage",
+		beforeSubmit : function() {
+			if("" == $("#filename").val() || undefined == $("#filename").val()){
+				console.log("请选择图片");
+				return false;
+			}
+		},
+		success : function(info) {
+			if (info.status == "error") {
+				alert("上传失败!");
+			} else {
+				//console.log(JSON.stringify(info));
+				parent.imgCropfun(info);//调用该插件回调函数
+				parent.$("#cutImgPop").modal("hide");
+				setTimeout(function(){
+					$(".progress").hide();
+					$(".progress-bar").width("0%");
+					$(".sr-only").text("0% Complete");
+				},500);						
+			}
+		},
+		failure : function(info) {
+			alert("网络连接失败，请稍后再试!");
+		}
+	});
+});
+
+function setSelectArea(coords) {
+	var x, y, width, height;
+	var ratio = $('#cropImg').data("ratio");
+	if (parseInt(coords.w) > 0) {
+		var x = Math.floor(parseInt(coords.x) * ratio);
+		var y = Math.floor(parseInt(coords.y) * ratio);
+		var width = Math.ceil(parseInt(coords.w) * ratio);
+		var height = Math.ceil(parseInt(coords.h) * ratio);
+	}
+	$("#x").val(x);
+	$("#y").val(y);
+	$("#width").val(width);
+	$("#height").val(height);
+}
+		
+function getUrlParam(){
+	var string_a = decodeURI(window.location.search);
+	var string_b = string_a.split('?');
+	var string = "";
+	if(string_b.length>1){
+		string = string_b[1].split('&');
+	}
+	var res = {};
+	for(var i = 0;i<string.length;i++){
+	    var str = string[i].split('=');
+	    res[str[0]] = eval(str[1]);
+	}
+	return res; 
+}
+
+function submitForm() {
+	$('#dataForm').submit();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<style type="text/css">
+ol, ul{margin:0;padding: 0;}
+pre ol.linenums li{line-height: 1.8;}
+.prettyprint .tag {
+	color: #007;
+}
+.prettyprint .pln {
+    color: #48484c;
+}
+.prettyprint .typ, .prettyprint .atn, .prettyprint .dec, .prettyprint .var {
+    color: teal;
+}
+.prettyprint .pun, .prettyprint .opn, .prettyprint .clo {
+    color: #93a1a1;
+}
+.prettyprint .str, .prettyprint .atv {
+    color: #D14;
+}
+</style>
+<div class="container">
+	<article class="cl pd-20">
+		<h1 class="page_title">幻灯片<small>jquery.SuperSlide插件</small></h1>
+		
+		<p>引入jQuery 和 jquery.SuperSlide.js</p>
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"http://lib.h-ui.net/jquery/1.9.1/jquery.min.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln"> </span></li><li class="L1"><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"http://lib.h-ui.net/jquery.SuperSlide/2.1.1/jquery.SuperSlide.min.js"</span><span class="tag">&gt;&lt;/script&gt;</span></li></ol></pre>
+		<h2>4.4.1 焦点图效果(自动播放，圆点控制)</h2>
+		<div class="codeView docs-example">
+			<iframe width="100%" height="275" src="lib/jquery.SuperSlide/2.1.1/demo/03/demo.html" scrolling="no" frameborder="0"></iframe>
+		</div>
+		<h3>HTML代码</h3>
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"slider-3"</span><span class="tag">&gt;</span></li><li class="L1"><span class="pln">	</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"slider"</span><span class="tag">&gt;</span></li><li class="L2"><span class="pln">		</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"bd"</span><span class="tag">&gt;</span></li><li class="L3"><span class="pln">			</span><span class="tag">&lt;ul&gt;</span></li><li class="L4"><span class="pln">				</span><span class="tag">&lt;li&gt;&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"#"</span><span class="pln"> </span><span class="atn">target</span><span class="pun">=</span><span class="atv">"_blank"</span><span class="tag">&gt;&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"images/banner-1.jpg"</span><span class="pln"> </span><span class="tag">&gt;&lt;/a&gt;&lt;/li&gt;</span></li><li class="L5"><span class="pln">				</span><span class="tag">&lt;li&gt;&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"#"</span><span class="pln"> </span><span class="atn">target</span><span class="pun">=</span><span class="atv">"_blank"</span><span class="tag">&gt;&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"images/banner-1.jpg"</span><span class="pln"> </span><span class="tag">&gt;&lt;/a&gt;&lt;/li&gt;</span></li><li class="L6"><span class="pln">				</span><span class="tag">&lt;li&gt;&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"#"</span><span class="pln"> </span><span class="atn">target</span><span class="pun">=</span><span class="atv">"_blank"</span><span class="tag">&gt;&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"images/banner-1.jpg"</span><span class="pln"> </span><span class="tag">&gt;&lt;/a&gt;&lt;/li&gt;</span></li><li class="L7"><span class="pln">				</span><span class="tag">&lt;li&gt;&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"#"</span><span class="pln"> </span><span class="atn">target</span><span class="pun">=</span><span class="atv">"_blank"</span><span class="tag">&gt;&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"images/banner-1.jpg"</span><span class="pln"> </span><span class="tag">&gt;&lt;/a&gt;&lt;/li&gt;</span></li><li class="L8"><span class="pln">			</span><span class="tag">&lt;/ul&gt;</span></li><li class="L9"><span class="pln">		</span><span class="tag">&lt;/div&gt;</span></li><li class="L0"><span class="pln">		</span><span class="tag">&lt;ol</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"hd cl dots"</span><span class="tag">&gt;</span></li><li class="L1"><span class="pln">			</span><span class="tag">&lt;li&gt;</span><span class="pln">1</span><span class="tag">&lt;/li&gt;</span></li><li class="L2"><span class="pln">			</span><span class="tag">&lt;li&gt;</span><span class="pln">2</span><span class="tag">&lt;/li&gt;</span></li><li class="L3"><span class="pln">			</span><span class="tag">&lt;li&gt;</span><span class="pln">3</span><span class="tag">&lt;/li&gt;</span></li><li class="L4"><span class="pln">			</span><span class="tag">&lt;li&gt;</span><span class="pln">4</span><span class="tag">&lt;/li&gt;</span></li><li class="L5"><span class="pln">		</span><span class="tag">&lt;/ol&gt;</span></li><li class="L6"><span class="pln">	</span><span class="tag">&lt;/div&gt;</span></li><li class="L7"><span class="tag">&lt;/div&gt;</span><span class="pln">		</span></li></ol></pre>
+		<h3>CSS代码</h3>
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pun">.</span><span class="pln">slider</span><span class="pun">{</span><span class="pln">position</span><span class="pun">:</span><span class="pln">relative</span><span class="pun">;</span><span class="pln">text</span><span class="pun">-</span><span class="pln">align</span><span class="pun">:</span><span class="pln">center</span><span class="pun">;</span><span class="pln"> margin</span><span class="pun">:</span><span class="lit">0</span><span class="pln"> </span><span class="kwd">auto</span><span class="pun">;</span><span class="pln">z</span><span class="pun">-</span><span class="pln">index</span><span class="pun">:</span><span class="lit">1</span><span class="pun">;}</span></li><li class="L1"><span class="pun">.</span><span class="pln">slider </span><span class="pun">.</span><span class="pln">bd</span><span class="pun">,.</span><span class="pln">slider </span><span class="pun">.</span><span class="pln">bd li</span><span class="pun">,.</span><span class="pln">slider </span><span class="pun">.</span><span class="pln">bd img</span><span class="pun">{</span><span class="pln">width</span><span class="pun">:</span><span class="lit">960px</span><span class="pun">;</span><span class="pln"> height</span><span class="pun">:</span><span class="lit">272px</span><span class="pun">}</span><span class="com">/*请给每个幻灯片套个div并设置id，通过id重置这个地方的宽度，达到自定义效果*/</span></li><li class="L2"><span class="pun">.</span><span class="pln">slider </span><span class="pun">.</span><span class="pln">bd</span><span class="pun">{</span><span class="pln">z</span><span class="pun">-</span><span class="pln">index</span><span class="pun">:</span><span class="lit">2</span><span class="pun">;</span><span class="pln">overflow</span><span class="pun">:</span><span class="pln">hidden</span><span class="pun">}</span></li><li class="L3"><span class="pun">.</span><span class="pln">slider </span><span class="pun">.</span><span class="pln">bd li</span><span class="pun">{</span><span class="kwd">float</span><span class="pun">:</span><span class="pln">left</span><span class="pun">;</span><span class="pln">width</span><span class="pun">:</span><span class="pln"> </span><span class="lit">100</span><span class="pun">%;</span><span class="pln">overflow</span><span class="pun">:</span><span class="pln">hidden</span><span class="pun">;</span><span class="pln"> background</span><span class="pun">-</span><span class="pln">position</span><span class="pun">:</span><span class="pln">center</span><span class="pun">;</span><span class="pln"> background</span><span class="pun">-</span><span class="pln">repeat</span><span class="pun">:</span><span class="kwd">no</span><span class="pun">-</span><span class="pln">repeat</span><span class="pun">}</span></li><li class="L4"><span class="pun">.</span><span class="pln">slider </span><span class="pun">.</span><span class="pln">bd li a</span><span class="pun">{</span><span class="pln"> display</span><span class="pun">:</span><span class="pln">block</span><span class="pun">;</span><span class="pln"> width</span><span class="pun">:</span><span class="pln"> </span><span class="lit">100</span><span class="pun">%;</span><span class="pln"> height</span><span class="pun">:</span><span class="pln"> </span><span class="lit">100</span><span class="pun">%}</span></li><li class="L5"><span class="pun">.</span><span class="pln">slider </span><span class="pun">.</span><span class="pln">bd li img</span><span class="pun">{</span><span class="pln">display</span><span class="pun">:</span><span class="pln">block</span><span class="pun">}</span></li><li class="L6"><span class="pun">.</span><span class="pln">slider </span><span class="pun">.</span><span class="pln">hd</span><span class="pun">{</span><span class="pln"> position</span><span class="pun">:</span><span class="pln"> absolute</span><span class="pun">;</span><span class="pln"> z</span><span class="pun">-</span><span class="pln">index</span><span class="pun">:</span><span class="pln"> </span><span class="lit">3</span><span class="pun">;</span><span class="pln"> left</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln"> right</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln"> bottom</span><span class="pun">:</span><span class="lit">10px</span><span class="pun">;</span><span class="pln"> padding</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pln"> </span><span class="lit">10px</span><span class="pun">;</span><span class="pln"> text</span><span class="pun">-</span><span class="pln">align</span><span class="pun">:</span><span class="pln"> center</span><span class="pun">}</span></li><li class="L7"><span class="pun">.</span><span class="pln">slider </span><span class="pun">.</span><span class="pln">hd li</span><span class="pun">{</span><span class="pln">display</span><span class="pun">:</span><span class="kwd">inline</span><span class="pun">-</span><span class="pln">block</span><span class="pun">;</span><span class="pln">text</span><span class="pun">-</span><span class="pln">align</span><span class="pun">:</span><span class="pln">center</span><span class="pun">;</span><span class="pln">margin</span><span class="pun">-</span><span class="pln">right</span><span class="pun">:</span><span class="lit">10px</span><span class="pun">;</span><span class="pln">cursor</span><span class="pun">:</span><span class="pln">pointer</span><span class="pun">;</span><span class="pln">background</span><span class="pun">-</span><span class="pln">color</span><span class="pun">:</span><span class="com">#C2C2C2}</span></li><li class="L8"><span class="pun">.</span><span class="pln">slider </span><span class="pun">.</span><span class="pln">hd li</span><span class="pun">.</span><span class="pln">active</span><span class="pun">{</span><span class="pln">background</span><span class="pun">-</span><span class="pln">color</span><span class="pun">:</span><span class="com">#222}</span></li><li class="L9"><span class="pln">  </span><span class="com">/*圆点*/</span></li><li class="L0"><span class="pln">  </span><span class="pun">.</span><span class="pln">dots li</span><span class="pun">{</span><span class="pln">width</span><span class="pun">:</span><span class="lit">10px</span><span class="pun">;</span><span class="pln"> height</span><span class="pun">:</span><span class="lit">10px</span><span class="pun">;</span><span class="pln">font</span><span class="pun">-</span><span class="pln">size</span><span class="pun">:</span><span class="lit">0px</span><span class="pun">;</span><span class="pln">line</span><span class="pun">-</span><span class="pln">height</span><span class="pun">:</span><span class="lit">0px</span><span class="pun">;</span><span class="pln">border</span><span class="pun">-</span><span class="pln">radius</span><span class="pun">:</span><span class="lit">50</span><span class="pun">%}</span></li><li class="L1"><span class="pln">  </span><span class="com">/*数字*/</span></li><li class="L2"><span class="pln">  </span><span class="pun">.</span><span class="pln">numbox li</span><span class="pun">{</span><span class="pln">width</span><span class="pun">:</span><span class="lit">20px</span><span class="pun">;</span><span class="pln"> height</span><span class="pun">:</span><span class="lit">20px</span><span class="pun">;</span><span class="pln"> line</span><span class="pun">-</span><span class="pln">height</span><span class="pun">:</span><span class="lit">20px</span><span class="pun">;</span><span class="pln"> font</span><span class="pun">-</span><span class="pln">size</span><span class="pun">:</span><span class="lit">13px</span><span class="pun">;</span><span class="pln">font</span><span class="pun">-</span><span class="pln">family</span><span class="pun">:</span><span class="typ">Arial</span><span class="pun">;</span><span class="pln">font</span><span class="pun">-</span><span class="pln">weight</span><span class="pun">:</span><span class="pln">bold</span><span class="pun">;</span><span class="pln"> text</span><span class="pun">-</span><span class="pln">indent</span><span class="pun">:</span><span class="pln">inherit</span><span class="pun">;}</span></li><li class="L3"><span class="pln">  </span><span class="pun">.</span><span class="pln">numbox li</span><span class="pun">.</span><span class="pln">active</span><span class="pun">{</span><span class="pln">color</span><span class="pun">:</span><span class="com">#fff}</span></li><li class="L4"><span class="pln">  </span><span class="com">/*长方条*/</span></li><li class="L5"><span class="pln">  </span><span class="pun">.</span><span class="pln">rectangle li</span><span class="pun">{</span><span class="pln">width</span><span class="pun">:</span><span class="lit">40px</span><span class="pun">;</span><span class="pln"> height</span><span class="pun">:</span><span class="lit">10px</span><span class="pun">;</span><span class="pln">font</span><span class="pun">-</span><span class="pln">size</span><span class="pun">:</span><span class="lit">0px</span><span class="pun">;</span><span class="pln">line</span><span class="pun">-</span><span class="pln">height</span><span class="pun">:</span><span class="lit">0px</span><span class="pun">}</span></li></ol></pre>
+		<p>默认hd上面追加的dots为圆点，将dots改为numbox就变成带数字的方框，rectangle为不带数字长方条</p>
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="com">#slider-3{ width: 960px; height: 273px; overflow: hidden}/*这个是demo页面定义尺寸的样式，请根据自己幻灯片的尺寸重新定义。切莫生搬硬套。*/</span></li></ol></pre>
+		<h3>js 代码</h3>	
+		<p>调用代码：</p>
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(){</span></li><li class="L1"><span class="pln">	jQuery</span><span class="pun">(</span><span class="str">"#slider-3 .slider"</span><span class="pun">).</span><span class="pln">slide</span><span class="pun">({</span><span class="pln">mainCell</span><span class="pun">:</span><span class="str">".bd ul"</span><span class="pun">,</span><span class="pln">titCell</span><span class="pun">:</span><span class="str">".hd li"</span><span class="pun">,</span><span class="pln">trigger</span><span class="pun">:</span><span class="str">"click"</span><span class="pun">,</span><span class="pln">effect</span><span class="pun">:</span><span class="str">"leftLoop"</span><span class="pun">,</span><span class="pln">autoPlay</span><span class="pun">:</span><span class="kwd">true</span><span class="pun">,</span><span class="pln">delayTime</span><span class="pun">:</span><span class="lit">700</span><span class="pun">,</span><span class="pln">interTime</span><span class="pun">:</span><span class="lit">7000</span><span class="pun">,</span><span class="pln">pnLoop</span><span class="pun">:</span><span class="kwd">false</span><span class="pun">,</span><span class="pln">titOnClassName</span><span class="pun">:</span><span class="str">"active"</span><span class="pun">});</span></li><li class="L2"><span class="pun">});</span></li></ol></pre>
+		<p>宽屏幻灯片效果，要想撑满屏幕，建议图片宽度做成2000px以上，中间主要视觉区间控制在网页的宽度之内，两边过渡到纯色，图片通过li上背景的方式去实现。这样不管是宽屏的还是窄屏的都可以很好的展示。具体效果见： <a href="lib/jquery.SuperSlide/2.1.1/demo/02/demo.html" target="_blank">lib/jquery.SuperSlide/2.1.1/demo/02/demo.html</a></p>
+		<h2>4.4.2 带缩略图效果</h2>
+		<div class="codeView docs-example">
+			<iframe width="100%" height="280" src="lib/jquery.SuperSlide/2.1.1/demo/01/demo.html" scrolling="no" frameborder="0"></iframe>
+		</div>
+		<h3>HTML代码</h3>
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"slider-1"</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"bg-fff box-shadow radius"</span><span class="tag">&gt;</span></li><li class="L1"><span class="pln">	</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"slider"</span><span class="tag">&gt;</span></li><li class="L2"><span class="pln">		</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"bd bg-fff"</span><span class="tag">&gt;</span></li><li class="L3"><span class="pln">			</span><span class="tag">&lt;ul&gt;</span></li><li class="L4"><span class="pln">				</span><span class="tag">&lt;li&gt;&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"#"</span><span class="pln"> </span><span class="atn">target</span><span class="pun">=</span><span class="atv">"_blank"</span><span class="tag">&gt;&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"images/b-1.jpg"</span><span class="pln"> </span><span class="tag">&gt;&lt;/a&gt;&lt;/li&gt;</span></li><li class="L5"><span class="pln">				</span><span class="tag">&lt;li&gt;&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"#"</span><span class="pln"> </span><span class="atn">target</span><span class="pun">=</span><span class="atv">"_blank"</span><span class="tag">&gt;&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"images/b-2.jpg"</span><span class="pln"> </span><span class="tag">&gt;&lt;/a&gt;&lt;/li&gt;</span></li><li class="L6"><span class="pln">				</span><span class="tag">&lt;li&gt;&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"#"</span><span class="pln"> </span><span class="atn">target</span><span class="pun">=</span><span class="atv">"_blank"</span><span class="tag">&gt;&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"images/b-3.jpg"</span><span class="pln"> </span><span class="tag">&gt;&lt;/a&gt;&lt;/li&gt;</span></li><li class="L7"><span class="pln">				</span><span class="tag">&lt;li&gt;&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"#"</span><span class="pln"> </span><span class="atn">target</span><span class="pun">=</span><span class="atv">"_blank"</span><span class="tag">&gt;&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"images/b-4.jpg"</span><span class="pln"> </span><span class="tag">&gt;&lt;/a&gt;&lt;/li&gt;</span></li><li class="L8"><span class="pln">				</span><span class="tag">&lt;li&gt;&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"#"</span><span class="pln"> </span><span class="atn">target</span><span class="pun">=</span><span class="atv">"_blank"</span><span class="tag">&gt;&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"images/b-5.jpg"</span><span class="pln"> </span><span class="tag">&gt;&lt;/a&gt;&lt;/li&gt;</span></li><li class="L9"><span class="pln">				</span><span class="tag">&lt;li&gt;&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"#"</span><span class="pln"> </span><span class="atn">target</span><span class="pun">=</span><span class="atv">"_blank"</span><span class="tag">&gt;&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"images/b-6.jpg"</span><span class="pln"> </span><span class="tag">&gt;&lt;/a&gt;&lt;/li&gt;</span></li><li class="L0"><span class="pln">			</span><span class="tag">&lt;/ul&gt;</span></li><li class="L1"><span class="pln">		</span><span class="tag">&lt;/div&gt;</span></li><li class="L2"><span class="pln">		</span><span class="tag">&lt;ol</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"hd cl"</span><span class="tag">&gt;</span></li><li class="L3"><span class="pln">			</span><span class="tag">&lt;li&gt;&lt;i&gt;&lt;/i&gt;&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"images/s-1.jpg"</span><span class="tag">&gt;&lt;/li&gt;</span></li><li class="L4"><span class="pln">			</span><span class="tag">&lt;li&gt;&lt;i&gt;&lt;/i&gt;&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"images/s-2.jpg"</span><span class="tag">&gt;&lt;/li&gt;</span></li><li class="L5"><span class="pln">			</span><span class="tag">&lt;li&gt;&lt;i&gt;&lt;/i&gt;&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"images/s-3.jpg"</span><span class="tag">&gt;&lt;/li&gt;</span></li><li class="L6"><span class="pln">			</span><span class="tag">&lt;li&gt;&lt;i&gt;&lt;/i&gt;&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"images/s-4.jpg"</span><span class="tag">&gt;&lt;/li&gt;</span></li><li class="L7"><span class="pln">			</span><span class="tag">&lt;li&gt;&lt;i&gt;&lt;/i&gt;&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"images/s-5.jpg"</span><span class="tag">&gt;&lt;/li&gt;</span></li><li class="L8"><span class="pln">			</span><span class="tag">&lt;li&gt;&lt;i&gt;&lt;/i&gt;&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"images/s-6.jpg"</span><span class="tag">&gt;&lt;/li&gt;</span></li><li class="L9"><span class="pln">		</span><span class="tag">&lt;/ol&gt;</span></li><li class="L0"><span class="pln">	</span><span class="tag">&lt;/div&gt;</span></li><li class="L1"><span class="tag">&lt;/div&gt;</span></li></ol></pre>
+		<h3>CSS 代码</h3>
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="com">#slider-1{width:760px;text-align:center}</span></li><li class="L1"><span class="com">#slider-1 .bd,#slider-1 .bd li,#slider-1 .bd img{width:760px; height:220px}</span></li><li class="L2"><span class="com">#slider-1 .hd{ margin-top:2px;height:58px;width:762px;}</span></li><li class="L3"><span class="com">#slider-1 .hd li{ position:relative; display:inline-block; float:left; margin-right:2px;cursor:pointer;width:125px; height:58px;}</span></li><li class="L4"><span class="com">#slider-1 .hd li img{ display:block;width:125px; height:58px;}</span></li><li class="L5"><span class="com">#slider-1 .hd li i{ position:absolute; display:block; z-index:9; left:0; top:0; right:0; bottom:0; background-color:rgba(0,0,0,0.6)}</span></li><li class="L6"><span class="com">#slider-1 .hd li.active i{ width:11px; height:6px; background:url(images/iconpic-arrow-up.png) no-repeat 0 0; top:-6px; left:50%; margin-left:-5px; bottom:auto; right:auto}</span></li></ol></pre>
+		<h3>js 代码</h3>	
+		<p>调用代码：</p>
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(){</span></li><li class="L1"><span class="pln">	jQuery</span><span class="pun">(</span><span class="str">"#slider-1 .slider"</span><span class="pun">).</span><span class="pln">slide</span><span class="pun">({</span><span class="pln">mainCell</span><span class="pun">:</span><span class="str">".bd ul"</span><span class="pun">,</span><span class="pln">titCell</span><span class="pun">:</span><span class="str">".hd li"</span><span class="pun">,</span><span class="pln">trigger</span><span class="pun">:</span><span class="str">"click"</span><span class="pun">,</span><span class="pln">effect</span><span class="pun">:</span><span class="str">"leftLoop"</span><span class="pun">,</span><span class="pln">autoPlay</span><span class="pun">:</span><span class="kwd">true</span><span class="pun">,</span><span class="pln">delayTime</span><span class="pun">:</span><span class="lit">850</span><span class="pun">,</span><span class="pln">interTime</span><span class="pun">:</span><span class="lit">7000</span><span class="pun">,</span><span class="pln">pnLoop</span><span class="pun">:</span><span class="kwd">false</span><span class="pun">,</span><span class="pln">titOnClassName</span><span class="pun">:</span><span class="str">"active"</span><span class="pun">});</span></li><li class="L2"><span class="pun">});</span></li></ol></pre>
+		<p>很多幻灯片的效果都大同小异，只要你熟悉前端布局，举一反三，少加修改，就能变成不同的布局效果。</p>
+		<h3>相关参数</h3>
+		<table class="table table-border table-bordered table-bg">
+			<thead>
+				<tr class="imp">
+					<th width="100">参数</th>
+					<th width="90">版本</th>
+					<th width="80">默认值</th>
+					<th>说明</th>
+					<th width="60">详细</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>type</td>
+					<td>2.1</td>
+					<td>slide</td>
+					<td>效果类型，可选"slide"||"menu"，引入type:"menu"专门处理菜单/导航效果</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>defaultPlay</td>
+					<td>2.1</td>
+					<td>true</td>
+					<td>默认是否执行效果（第一次运行是否执行效果）常用于导航/菜单</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>returnDefault</td>
+					<td>2.1</td>
+					<td>false</td>
+					<td>鼠标移出容器，是否返回默认状态，常用于导航/菜单</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>mouseOverStop</td>
+					<td>2.1</td>
+					<td>true</td>
+					<td>鼠标移到容器层（无缝滚动是mainCell）是否停止播放</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>playStateCell</td>
+					<td>2.1</td>
+					<td>".playState"</td>
+					<td>播放/暂停状态按钮，点击后会增加/删除"pauseState"类名用于控制样色。可参考 <a target="_blank" href="http://www.superslide2.com/otherDemo.html#effect2">[2.22-真·全屏焦点图]</a></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>switchLoad</td>
+					<td>2.0 &gt; 2.1</td>
+					<td>null</td>
+					<td>内容切换加载，暂时只支持图片，必须配合后台程序使用。当为图片的时候switchLoad为图片实际路径的属性名称，例如switchLoad:"_src"<br>
+						[v2.1] 修复当scroll&gt;1时，switchLoad无效的bug。 </td>
+					<td><a class="link" target="_blank" href="http://www.superslide2.com/otherDemo/T2.5/switchLoad.html">详解</a></td>
+				</tr>
+				<tr>
+					<td>easing</td>
+					<td>2.0 &gt; 2.1</td>
+					<td>"swing"</td>
+					<td>缓动效果；<br>
+						[v2.1]更改默认效果为“swing”，使效果更流畅</td>
+					<td><a class="link" target="_blank" href="http://www.superslide2.com/otherDemo/T2.1/easing.html">所有</a></td>
+				</tr>
+				<tr>
+					<td>startFun</td>
+					<td>2.0 &gt; 2.1</td>
+					<td>null</td>
+					<td>每次切换效果开始时执行函数，用于处理特殊情况或创建更多效果。用法 satrtFun:function(i,c){ }； 其中i为当前分页，c为总页数<br>
+						[v2.1]增加传递参数，startFun:function( i, c, slider, titCell, mainCell, targetCell, prevCell, nextCell ){}，这样简写就方便了。<br>
+						例如 jQuery(".slideBox").slide({ startFun:function( i,c,s ){ s.show() } }); 这里的 s.show() 相当于 jQuery(".slideBox").show() </td>
+					<td><a class="link" target="_blank" href="http://www.superslide2.com/otherDemo/T2.2/funIntro.html">详解</a></td>
+				</tr>
+				<tr>
+					<td>endFun</td>
+					<td>2.0 &gt; 2.1</td>
+					<td>null</td>
+					<td>每次切换效果结束时执行函数，用法和startFun一致<br></td>
+					<td><a class="link" target="_blank" href="http://www.superslide2.com/otherDemo/T2.2/funIntro.html">详解</a></td>
+				</tr>
+				<tr>
+					<td>triggerTime</td>
+					<td>2.0</td>
+					<td>150</td>
+					<td>毫秒，titCell触发时间，默认150毫秒延迟，以防重复执行效果。若为0即鼠标移过titCell立刻执行效果</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>targetCell</td>
+					<td>2.0 &gt; 2.1</td>
+					<td>null</td>
+					<td>切换元素对象，处理内容切换元素非包裹状态下等情况，实现更多效果，处理更多情况，能和titCell、mainCell同时使用。只支持fade效果。<br>
+						[v2.1] 增加支持slideDown效果。 </td>
+					<td><a class="link" target="_blank" href="http://www.superslide2.com/otherDemo/T2.3/targetCell.html">详解</a></td>
+				</tr>
+				<tr>
+					<td>pageStateCell</td>
+					<td>2.0</td>
+					<td>".pageState"</td>
+					<td>分页状态对象，用于显示分页状态，例如：2/3</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>pnLoop</td>
+					<td>2.0</td>
+					<td>true</td>
+					<td>前/后按钮是否继续循环，若为false则当翻动到最前/后页时，前/后按钮点击无效，同时增加prevStop/nextStop类名控制样色</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>opp</td>
+					<td>2.0</td>
+					<td>false</td>
+					<td>默认反方向运动，例如 effect:"leftMarquee" 然后设置 opp:true，则效果为右滚动。常用于leftMarquee/topMarquee</td>
+					<td></td>
+				</tr>
+				<tr class="imp">
+					<td><b>autoPage</b></td>
+					<td>1.2 &gt; 2.1</td>
+					<td>false</td>
+					<td> [v1.2] 程序自动分页，<i>需结合titCell使用，若为true，则titCell为导航元素的包裹层对象。ps：scroll&gt;1时，记得设置autoPage:true，否则分页错误</i>。<br>
+						[v2.1] 支持自定义分页html，$为数字替换位置。例如autoPage:"&lt;li&gt;&lt;a&gt;$&lt;/a&gt;&lt;/li&gt;"，如果不想输出数字：autoPage:"&lt;li&gt;&lt;a&gt;&lt;/a&gt;&lt;/li&gt;"。 </td>
+					<td><a class="link" target="_blank" href="images/autoPage.png">图解</a></td>
+				</tr>
+				<tr class="imp">
+					<td><b>titCell</b></td>
+					<td>1.0</td>
+					<td>".hd li"</td>
+					<td>导航元素对象（鼠标的触发元素对象）</td>
+					<td><a class="link" target="_blank" href="images/titCell_mainCell.png">图解</a></td>
+				</tr>
+				<tr class="imp">
+					<td><b>mainCell</b></td>
+					<td>1.0</td>
+					<td>".bd"</td>
+					<td>切换元素的包裹层对象</td>
+					<td><a class="link" target="_blank" href="images/titCell_mainCell.png">图解</a></td>
+				</tr>
+				<tr class="imp">
+					<td>effect</td>
+					<td>1.0 &gt; 2.0 &gt;2.1</td>
+					<td>"fade"</td>
+					<td>动画效果<br>
+						[v1.0] fade：渐显； ||   top：上滚动；||   left：左滚动；||  topLoop：上循环滚动；||   leftLoop：左循环滚动；||  topMarquee：上无缝循环滚动；||   leftMarquee：左无缝循环滚动；<br>
+						[v2.0] fold：淡入淡出<br>
+						[v2.1] slideDown：下拉效果</td>
+					<td></td>
+				</tr>
+				<tr class="imp">
+					<td>autoPlay</td>
+					<td>1.0</td>
+					<td>false</td>
+					<td>自动运行</td>
+					<td></td>
+				</tr>
+				<tr class="imp">
+					<td>interTime</td>
+					<td>1.0</td>
+					<td>2500</td>
+					<td>毫秒；自动运行间隔。当effect为无缝滚动(topMarquee/leftMarquee)时，相当于运行速度。</td>
+					<td></td>
+				</tr>
+				<tr class="imp">
+					<td>delayTime</td>
+					<td>1.0</td>
+					<td>500</td>
+					<td>毫秒；切换效果持续时间（一次切换效果执行所用的时间长度）。</td>
+					<td></td>
+				</tr>
+				<tr class="imp">
+					<td>trigger</td>
+					<td>1.0</td>
+					<td>"mouseover"</td>
+					<td>titCell触发方式 || mouseover：鼠标移过触发；|| click：鼠标点击触发；</td>
+					<td></td>
+				</tr>
+				<tr class="imp">
+					<td>scroll</td>
+					<td>1.0</td>
+					<td>1</td>
+					<td>每次滚动个数。</td>
+					<td></td>
+				</tr>
+				<tr class="imp">
+					<td>vis</td>
+					<td>1.0</td>
+					<td>1</td>
+					<td>visible缩写，<i>mainCell的可视范围个数，当实际内容个数少于可视个数的时候，不执行SuperSlide效果。</i></td>
+					<td><a class="link" target="_blank" href="images/vis.png">图解</a></td>
+				</tr>
+				<tr class="n">
+					<td>prevCell</td>
+					<td>1.0</td>
+					<td>".prev"</td>
+					<td>前一个/页按钮对象。</td>
+					<td></td>
+				</tr>
+				<tr class="n">
+					<td>nextCell</td>
+					<td>1.0</td>
+					<td>".next"</td>
+					<td>后一个/页按钮对象。</td>
+					<td></td>
+				</tr>
+				<tr class="n">
+					<td>defaultIndex</td>
+					<td>1.0</td>
+					<td>0</td>
+					<td>默认的当前位置索引。0是第一个； defaultIndex:1 时，相当于从第2个开始执行</td>
+					<td></td>
+				</tr>
+				<tr class="n">
+					<td>titOnClassName</td>
+					<td>1.0</td>
+					<td>"on"</td>
+					<td>当前titCell位置自动增加的class名称</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>			
+	</article>
+</div>
+
+<script type="text/javascript" src="lib/jquery.SuperSlide/2.1.1/jquery.SuperSlide.min.js"></script>
+<script type="text/javascript">
+$(function(){
+});
+</script>

@@ -1,0 +1,217 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>动态加载js demo</title>
+</head>
+<body>
+<div data-luyou="true" data-module="str_substr_demo">
+	<span data-luyou="true"><a href="#" data-luyou="true"></a></span>
+</div>
+	
+<script type="text/javascript">
+var Util = function(){
+	var getScript = function(url, callback) {
+		//取出要加载的文件名
+		var fileNameArr = url.split("/");
+		var fileName = fileNameArr[fileNameArr.length-1];
+		var isExist = 0;
+		var scriptFileArr = document.getElementsByTagName('script');
+		//遍历页面已加载所有js
+		for(var i in scriptFileArr){
+			if(scriptFileArr[i].src){
+				//取出已加载的文件名
+				var _fileNameArr = scriptFileArr[i].src.split("/");
+				var _fileName = _fileNameArr[_fileNameArr.length-1];
+				if(fileName == _fileName){
+					isExist = 1;
+				}				
+			}
+		}
+		if(isExist){
+			if (callback)
+		    	callback();
+			return;
+		}
+		
+		var head = document.getElementsByTagName('head')[0];
+		var script = document.createElement('script');
+		script.type = "text/javascript";
+		script.src = url;
+		
+		var done = false;
+		script.onload = script.onreadystatechange = function() {
+			if (!done && (!this.readyState ||
+	        	this.readyState == 'loaded' || this.readyState == 'complete')) {
+		        done = true;
+		        if (callback)
+		            callback();
+		
+		        script.onload = script.onreadystatechange = null;
+	    	}
+		};
+	
+		head.appendChild(script);
+	},
+	
+	getCss = function getCss(url, callback) {
+		//取出要加载的文件名
+		var fileNameArr = url.split("/");
+		var fileName = fileNameArr[fileNameArr.length-1];
+		var isExist = 0;
+		var cssFileArr = document.getElementsByTagName('link');
+		//遍历页面已加载所有css
+		for(var i in cssFileArr){
+			if(cssFileArr[i].href){
+				//取出已加载的文件名
+				var _fileNameArr = cssFileArr[i].href.split("/");
+				var _fileName = _fileNameArr[_fileNameArr.length-1];
+				if(fileName == _fileName){
+					isExist = 1;
+				}				
+			}
+		}
+		if(isExist){
+			return;
+		}
+		
+		var head = document.getElementsByTagName('head')[0];
+		var cssScript = document.createElement('link');
+		cssScript.rel="stylesheet";
+		cssScript.type="text/css";
+		cssScript.href = url;
+		
+		var done = false;
+		cssScript.onload = cssScript.onreadystatechange = function() {
+			if (!done && (!this.readyState ||
+	        	this.readyState == 'loaded' || this.readyState == 'complete')) {
+		        done = true;
+		        if (callback)
+		        	callback();
+//		            callback("err");
+		
+		        cssScript.onload = cssScript.onreadystatechange = null;
+	    	}
+		};
+	
+		head.appendChild(cssScript);
+	};
+	
+	this.getFun = function(){
+		return {getScript, getCss};
+	};
+	this.eachSeries = function (arr, iterator, callback) {
+		callback = callback || function () {};
+	    if (!arr.length) {
+	        return callback();
+	    }
+	    var completed = 0;
+	    var getCallback = function (err) {
+            if (err) {
+                callback(err);
+                callback = function () {};
+            } else {
+                completed += 1;
+                if (completed >= arr.length) {
+                    callback(null);
+                } else {
+                    iterate();
+                }
+            }
+        };
+	    var iterate = function () {
+	    	if("getCss" == iterator){
+	    		getCss(arr[completed], getCallback);
+	    	}else if("getScript" == iterator){
+	    		getScript(arr[completed], getCallback);
+	    	}
+	    };
+	    iterate();
+	}
+};
+//Util.prototype = {
+//	eachSeries: function (arr, iterator, callback) {
+////		console.log(this.getFun().getScript);return;
+//		this.getFun().getCss("../../style.css",function(){console.log("111");});return;
+//		
+//	    callback = callback || function () {};
+//	    if (!arr.length) {
+//	        return callback();
+//	    }
+//	    var completed = 0;
+//	    var iterate = function () {
+//	    	if("getCss" == iterator){
+//	    		getCss(arr[completed], function (err) {
+//		            if (err) {
+//		                callback(err);
+//		                callback = function () {};
+//		            } else {
+//		                completed += 1;
+//		                if (completed >= arr.length) {
+//		                    callback(null);
+//		                } else {
+//		                    iterate();
+//		                }
+//		            }
+//		        });
+//	    	}else if("getScript" == iterator){
+//	    		getScript(arr[completed], function (err) {
+//		            if (err) {
+//		                callback(err);
+//		                callback = function () {};
+//		            } else {
+//		                completed += 1;
+//		                if (completed >= arr.length) {
+//		                    callback(null);
+//		                } else {
+//		                    iterate();
+//		                }
+//		            }
+//		        });
+//	    	}
+//	    };
+//	    iterate();
+//	}
+//};
+
+(function test(){
+//	console.log(arguments);return;
+	try{
+		var luyouModuleLen = $("*[data-luyou='true']").length;
+//		console.log(luyouModuleLen);
+		if(luyouModuleLen > 0){
+			var path = "/常用js插件整理/lib/util/";
+			$("*[data-luyou='true']").each(function(){
+				var _this = $(this);
+				var moduleName = _this.data("module");
+				if(moduleName){
+					var moduleCon = document.createElement("div");
+					$(moduleCon).load(path+moduleName+".html",function(){
+						_this.append($(moduleCon).html());
+					});
+				}
+			});
+		}
+	}catch(e){
+		var utilObj = new Util();
+//		utilObj.getCss("../../style.css",function(){console.log("111");});return;
+		utilObj.eachSeries(["../../style.css","../bootstrap/css/bootstrap.min.css"], "getCss", function(err){
+			if(err){
+				console.log(err);
+				return;
+			}
+			utilObj.eachSeries(["../../style.css","../bootstrap/css/bootstrap.min.css"], "getCss", function(err){});
+			utilObj.eachSeries(["../../jquery-1.11.2.min.js","../bootstrap/js/bootstrap.min.js"], "getScript", function(){
+				utilObj.eachSeries(["../../jquery-1.11.2.min.js","../../jquery-1.11.2.min.js"], "getScript", function(){
+					test();
+				});
+			});
+		});
+	}
+})();
+</script>
+</body>
+</html>

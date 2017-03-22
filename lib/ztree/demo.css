@@ -1,0 +1,34 @@
+.content_wrap{
+	margin: 0;padding: 0;border: 0;outline: 0;font-weight: inherit;vertical-align: baseline;color: #2f332a;font: 15px/21px Arial, Helvetica, simsun, sans-serif;background: #f0f6e4 \9;}
+.content_wrap h1, .content_wrap h2, .content_wrap h3, .content_wrap h4, .content_wrap h5, .content_wrap h6 {color: #2f332a;font-weight: bold;font-family: Helvetica, Arial, sans-serif;margin: 0;padding: 0;border: 0;outline: 0;padding-bottom: 5px;}
+.content_wrap h1 {font-size: 24px;line-height: 34px;text-align: center;}
+.content_wrap h2 {font-size: 14px;line-height: 24px;padding-top: 5px;}
+.content_wrap h6 {font-weight: normal;font-size: 12px;letter-spacing: 1px;line-height: 24px;text-align: center;}
+.content_wrap a {color:#3C6E31;text-decoration: underline;}
+.content_wrap input.radio {margin: 0 2px 0 8px;}
+.content_wrap input.radio.first {margin-left:0;}
+.content_wrap input.empty {color: lightgray;}
+.content_wrap code {color: #2f332a;}
+.content_wrap .highlight_red {color:#A60000;}
+.content_wrap .highlight_green {color:#A7F43D;}
+.content_wrap .right li {list-style: circle;font-size: 12px;}
+.content_wrap .right li.title {list-style: none;}
+.content_wrap .right ul.list {margin-left: 17px;}
+
+div.content_wrap {margin:50px 0;width: 600px;height:auto;overflow-y: hidden;}
+div.content_wrap div.left{float: left;width: 250px;}
+div.content_wrap div.right{float: right;width: 340px;}
+div.zTreeDemoBackground {width:250px;height:362px;text-align:left;}
+
+ul.ztree {margin-top: 10px;border: 1px solid #617775;background: #f0f6e4;width:220px;height:360px;overflow-y:scroll;overflow-x:auto;}
+ul.log {border: 1px solid #617775;background: #f0f6e4;width:300px;height:170px;overflow: hidden;}
+ul.log.small {height:45px;}
+ul.log li {color: #666666;list-style: none;padding-left: 10px;}
+ul.log li.dark {background-color: #E3E3E3;}
+
+/* ruler */
+div.ruler {height:20px; width:220px; background-color:#f0f6e4;border: 1px solid #333; margin-bottom: 5px; cursor: pointer}
+div.ruler div.cursor {height:20px; width:30px; background-color:#3C6E31; color:white; text-align: right; padding-right: 5px; cursor: pointer}
+#menuTree{background: #af0000;}
+
+.clearfix:before{clear:both;}

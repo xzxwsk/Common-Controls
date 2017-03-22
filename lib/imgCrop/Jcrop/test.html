@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../../lib/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="../../../lib/imgCrop/Jcrop/css/jquery.Jcrop.min.css" />
+<title>jquery Jcrop图片剪裁</title>
+<style type="text/css">
+body{background:none;}
+#resultImg{display: none;}
+</style>
+</head>
+
+<body>
+<h6>异步上传图片，返回url预览，并截图，然后再异步上传截图参数，可自由设置截图框形状参数</h6>
+<input type="button" value="按钮" id="testBtn" />	<br/><br/>
+<img src="" id="resultImg" />
+	
+<script type="text/javascript" src="../../../jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="../../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../../lib/imgCrop/Jcrop/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="../../../lib/imgCrop/Jcrop/js/jquery.Jcrop.min.js"></script>
+<script type="text/javascript" src="../../../lib/imgCrop/Jcrop/js/imageCrop.js"></script>
+<script type="text/javascript" src="../../../lib/imgCrop/Jcrop/js/md5.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	var accno = "mytest";
+	var random = Math.random();
+	$("#testBtn").fnImageCrop({
+			aspectRatio : 4 / 3,
+			ImgType : "jpg,png",//逗号之间不能有空格 
+			max_file_size : "200kb",
+			accno: accno,//必传
+			key:  random,//必传
+			sign: md5(random+"6799f4e52a01461fa463b3ed81e79e0c"),//必传
+			flash_swf_url : '../../../lib/imgCrop/Jcrop/js/Moxie.swf',//必传
+			silverlight_xap_url : '../../../lib/imgCrop/Jcrop/js/Moxie.xap',//必传
+		},function(res){
+			if(res.status == "success"){
+				$("#resultImg").attr("src", res.preview).show();
+			}else{
+				alert("出错了");
+				window.location.reload();
+			}
+		}
+	);
+	
+	
+	if(parent.setFrameH)
+		parent.setFrameH(Math.max($("body").height()+50, 500));
+});
+</script>
+</body>
+</html>

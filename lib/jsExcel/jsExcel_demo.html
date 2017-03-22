@@ -1,0 +1,383 @@
+<link rel="stylesheet" type="text/css" href="lib/jsExcel/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="lib/jsExcel/dataTables.tableTools.css">
+<style type="text/css">
+p{margin:10px 0;}
+.mgb0{margin-bottom: 0;}
+div.DTTT_container{margin-bottom:0;}
+</style>
+<div class="container">
+	<h1>js导出excel</h1>
+	<p>1. 借助开源组件 <a href="https://github.com/eligrey/FileSaver.js" target="blank" style="color:#3300ff">FileSaver.js</a> 和 <a href="https://github.com/eligrey/Blob.js" target="blank" style="color:#3300ff">Blob.js</a> ，(支持：ie10+, Firefox20+, Chrome, Safari6+, Opera15+)</p>
+	<p>2. 借助Flash开源组件 <a href="lib/jsExcel/js/FileSaver.js" target="blank" style="color:#3300ff">Downloadify</a> ，(支持：所有浏览器)
+	<p><strong>数据内容:</strong></p>
+	<textarea rows="6" style="width:80%" id="content">
+姓名,学号,成绩
+王三,103020120,98
+张四,103020218,80
+	</textarea>
+	<p>
+		<strong>文件名</strong>:&nbsp;<input type="text" name="filename" id="filename" value="hello.csv" />&nbsp;(.csv后缀)
+	</p>
+	<p>1. 使用FileSaver.js保存</p>
+	<p><button id="saveBtn">保存Excel文件</button></p>
+	<p>&nbsp;</p>
+	<p>2. 使用Downloadify保存 (保存的xls无边框)</p>
+	<p id="downloadify">
+		<object id="downloadify_obj" width="100" height="30" type="application/x-shockwave-flash" name="downloadify_obj">
+			<param name="allowScriptAccess" value="always">
+			<param name="wmode" value="transparent">
+			<param name="flashvars" value="queue_name=downloadify&width=100&height=30&downloadImage=images/download.png">
+		</object>
+	</p>
+	<p>&nbsp;</p>
+	<p>3. 使用data:application/vnd.ms-excel;base64保存</p>
+	<table id="ta" class="table display mgb0">
+	  <thead>
+	  	<tr>
+	  		<th>dsfad</th>
+	  		<th>dsfad</th>
+	  		<th>dsfad</th>
+	  		<th>dsfad</th>
+	  		<th>dsfad</th>
+	  		<th>dsfad</th>
+	  	</tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+	    <td>1</td><td>admin</td>
+	    <td>23</td><td>程序员</td>
+	    <td>天津</td><td>admin@kali.com</td>
+	  </tr>
+	  <tr>
+	    <td>2</td><td>guest</td>
+	    <td>23</td><td>测试员</td>
+	    <td>北京</td><td>guest@kali.com</td>
+	  </tr>
+	  </tbody>
+	</table>
+	<p><input id="Button1" type="button" value="导出EXCEL" onclick="javascript:method1('ta')" /></p>
+	<p>&nbsp;</p>
+	<!--datatable-->
+	<p>4. 使用jquery.datatable保存</p>
+	<p><input id="Button1" type="button" value="导出EXCEL" onclick="javascript:method2('ta')" /></p>
+	<table id="ta2" class="table display mgb0">
+	  <thead>
+	  	<tr>
+	  		<th>dsfad</th>
+	  		<th>dsfad</th>
+	  		<th>dsfad</th>
+	  		<th>dsfad</th>
+	  		<th>dsfad</th>
+	  		<th>dsfad</th>
+	  	</tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+	    <td>1</td><td>admin</td>
+	    <td>23</td><td>程序员</td>
+	    <td>天津</td><td>admin@kali.com</td>
+	  </tr>
+	  <tr>
+	    <td>2</td><td>guest</td>
+	    <td>23</td><td>测试员</td>
+	    <td>北京</td><td>guest@kali.com</td>
+	  </tr>
+	  </tbody>
+	</table>
+</div>
+
+<!--filesaver-->
+<!--<script async="" src="lib/jsExcel/js/angular1.3.9/angular.min.js"></script>-->
+<script async="" src="lib/jsExcel/js/Blob.js"></script>
+<script async="" src="lib/jsExcel/js/FileSaver.js"></script>
+<script>
+(function(){
+	document.getElementById("saveBtn").onclick = function(event){
+		event.preventDefault();
+		var BB = self.Blob;
+		saveAs(
+			  new BB(
+				  ["\ufeff" + document.getElementById("content").value] //\ufeff防止utf8 bom防止中文乱码
+				, {type: "text/plain;charset=utf8"}
+			  )
+			, document.getElementById("filename").value
+		);
+	};
+})();
+</script>
+<!--downloadify-->
+<script src="lib/jsExcel/js/swfobject.js"></script>
+<script src="lib/jsExcel/js/downloadify.min.js"></script>
+<script>
+(function(){
+	Downloadify.create('downloadify',{
+	    filename: function(){
+//	      return document.getElementById('filename').value;
+		  return "Data.xls";
+	    },
+	    data: function(){ 
+//	      return "\ufeff" + document.getElementById('content').value;
+		  return document.getElementById('ta').outerHTML;
+	    },
+	    onComplete: function(){ 
+	      alert('Downloadify保存成功!'); 
+	    },
+	    onCancel: function(){ 
+	    },
+	    onError: function(){ 
+	      alert('Downloadify保存失败!'); 
+	    },
+	    transparent: false,
+	    swf: 'lib/jsExcel/js/downloadify.swf',
+	    downloadImage: 'lib/jsExcel/images/download.png',
+	    width: 100,
+	    height: 30,
+	    transparent: true,
+	    append: false
+	  });
+	})();
+</script>
+
+<script id="scriptId">
+	var idTmr;
+    function getExplorer() {
+        var explorer = window.navigator.userAgent ;
+        if (explorer.indexOf("MSIE") >= 0) {
+            return 'ie';
+        }
+        else if (explorer.indexOf("Firefox") >= 0) {
+            return 'Firefox';
+        }
+        else if(explorer.indexOf("Chrome") >= 0){
+            return 'Chrome';
+        }
+        else if(explorer.indexOf("Opera") >= 0){
+            return 'Opera';
+        }
+        else if(explorer.indexOf("Safari") >= 0){
+            return 'Safari';
+        }
+    }
+    
+    function getTblData(inTbl, inWindow) {  
+        var rows = 0, tblDocument = document;  
+        if (!!inWindow && inWindow != "") {  
+            if (!document.all(inWindow)) {  
+                return null;  
+            } else {  
+                tblDocument = eval(inWindow).document;  
+            }  
+        }  
+        var curTbl = tblDocument.getElementById(inTbl);  
+        if (curTbl.rows.length > 65000) {  
+            alert('源行数不能大于65000行');  
+            return false;  
+        }  
+        if (curTbl.rows.length <= 1) {  
+            alert('数据源没有数据');  
+            return false;  
+        }  
+        var outStr = "";  
+        if (curTbl != null) {  
+            for (var j = 0; j < curTbl.rows.length; j++) {  
+                for (var i = 0; i < curTbl.rows[j].cells.length; i++) {  
+                    if (i == 0 && rows > 0) {  
+                        outStr += " \t"; rows -= 1;  
+                    }  
+                    var tc = curTbl.rows[j].cells[i];  
+                    if (j > 0 && tc.hasChildNodes() && tc.firstChild.nodeName.toLowerCase() == "input") {  
+                        if (tc.firstChild.type.toLowerCase() == "checkbox") {  
+                            if (tc.firstChild.checked == true) {  
+                                outStr += "是" + "\t";  
+                            } else {  
+                                outStr += "否" + "\t";  
+                            }  
+                        }  
+                    } else {  
+                        outStr += " " + curTbl.rows[j].cells[i].innerText + "\t";  
+                    }  
+                    if (curTbl.rows[j].cells[i].colSpan > 1) {  
+                        for (var k = 0; k < curTbl.rows[j].cells[i].colSpan - 1; k++) {  
+                            outStr += " \t";  
+                        }  
+                    }  
+                    if (i == 0) {  
+                        if (rows == 0 && curTbl.rows[j].cells[i].rowSpan > 1) {  
+                            rows = curTbl.rows[j].cells[i].rowSpan - 1;  
+                        }  
+                    }  
+                }  
+                outStr += "\r\n";  
+            }  
+        } else {  
+            outStr = null; alert(inTbl + "不存在!");  
+        }  
+        return outStr;  
+    }
+    function doFileExport(inName, inStr) {  
+        var xlsWin = null;  
+        if (!!document.all("glbHideFrm")) {  
+            xlsWin = glbHideFrm;  
+        } else {  
+            var width = 1; var height = 1;  
+            var openPara = "left=" + (window.screen.width / 2 + width / 2) + ",top=" + (window.screen.height + height / 2) +  
+             ",scrollbars=no,width=" + width + ",height=" + height;  
+            xlsWin = window.open("", "_blank", openPara);  
+        }  
+        xlsWin.document.write(inStr);  
+        xlsWin.document.close();  
+        xlsWin.document.execCommand('Saveas', true, inName);  
+        xlsWin.close();  
+    }
+    
+    
+    function Cleanup() {
+        window.clearInterval(idTmr);
+        CollectGarbage();
+    }
+    function method1(tableid) {//整个表格拷贝到EXCEL中
+        if(getExplorer()=='ie'){
+//用ActiveXObject方式,ie9以上浏览器报错        	
+//          var curTbl = document.getElementById(tableid);
+//          var oXL = new ActiveXObject("Excel.Application");
+//
+//          //创建AX对象excel 
+//          var oWB = oXL.Workbooks.Add();
+//          //获取workbook对象 
+//          var xlsheet = oWB.Worksheets(1);
+//          //激活当前sheet 
+//          var sel = document.body.createTextRange();
+//          sel.moveToElementText(curTbl);
+//          //把表格中的内容移到TextRange中 
+//          sel.select;
+//          //全选TextRange中内容 
+//          sel.execCommand("Copy");
+//          //复制TextRange中内容  
+//          xlsheet.Paste();
+//          //粘贴到活动的EXCEL中       
+//          oXL.Visible = true;
+//          //设置excel可见属性
+//
+//          try {
+//              var fname = oXL.Application.GetSaveAsFilename("Excel.xls", "Excel Spreadsheets (*.xls), *.xls");
+//          } catch (e) {
+//              print("Nested catch caught " + e);
+//          } finally {
+//              oWB.SaveAs(fname);
+//
+//              oWB.Close(savechanges = false);
+//              //xls.visible = false;
+//              oXL.Quit();
+//              oXL = null;
+//              //结束excel进程，退出完成
+//              //window.setInterval("Cleanup();",1);
+//              idTmr = window.setInterval("Cleanup();", 1);
+//          }
+
+//用window.open方式
+			try {  
+                var allStr = "", curStr = "";  
+                if (tableid != null && tableid != "" && tableid != "null") {  
+                    curStr = getTblData(tableid, "");  
+                }  
+                if (curStr != null) {  
+                    allStr += curStr;  
+                }  
+                else {  
+                    alert("你要导出的表不存在！");  
+                    return;  
+                }  
+                var fileName = "ie_windowopen.xls";  
+                doFileExport(fileName, allStr);  
+            }catch (e) {  
+                alert("导出发生异常:" + e.name + "->" + e.description + "!");  
+            } 
+        }
+        else
+        {
+            tableToExcel(tableid);
+        }
+    }
+    var downloadFile = function downloadFile(content, filename) {
+//    if("Firefox" == getExplorer()){
+//		$("<a href='"+content+"' id='exportLink' target='_blank' download='"+filename+"'></a>").appendTo("body");
+//		var event = document.createEvent('MouseEvents');
+//	    event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+//	    $("#exportLink")[0].dispatchEvent(event);
+//		$("#exportLink").remove();
+//    	return;
+//    }
+      var supportsDownloadAttribute = 'download' in document.createElement('a');
+      if(supportsDownloadAttribute) {
+//      var link = angular.element('<a/>');
+//      link.attr({
+//        href: content,
+//        target: '_blank',
+//        download: filename
+//      })[0];
+		var link = document.createElement("a");
+		link.target = "_blank";
+		link.download = filename;
+		link.href = content;
+        var event = document.createEvent('MouseEvents');
+	    event.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+		link.dispatchEvent(event);
+//	    link[0].dispatchEvent(event);
+//      setTimeout(function() {
+//        link.remove();
+//      }, 50);
+      } else if(typeof safari !== 'undefined') {
+        window.open(content);
+      } else {
+        var blob = new Blob([content], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, filename);
+      }
+    }
+    var tableToExcel = (function() {
+		var uri = 'data:application/vnd.ms-excel;base64,',
+			template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+			base64 = function(s) { 
+				return window.btoa(unescape(encodeURIComponent(s)));
+			},
+			format = function(s, c) {
+			    return s.replace(/{(\w+)}/g,
+				    function(m, p) { 
+				    	return c[p]; 
+				    });
+			};
+		return function(table, name) {
+			if (!table.nodeType) table = document.getElementById(table)
+			var ctx = {
+				worksheet: "name" || 'Worksheet', 
+				table: table.innerHTML
+			};
+//		    window.location.href = uri + base64(format(template, ctx));
+			downloadFile(uri + base64(format(template, ctx)), "database64.xls");  
+		}
+    })();
+    
+    function method2(tableid) {
+		//使用jquery.datatable
+		$("#scriptId").before('<script async="" src="lib/jsExcel/js/jquery.dataTables.js"><\/script>'+
+'<script async="" src="lib/jsExcel/js/dataTables.tableTools.js"><\/script>');
+		$('#ta2').dataTable({
+		// 		l - Length changing  选择每页显示行数下拉框的控件
+		//		f - Filtering input  搜索过滤控件
+		//		t - The Tabletools    导出excel，csv的按钮
+		//		i - Information  显示汇总信息（从 1 到 100 /共 1,288 条数据）
+		//		p - Pagination   分页控件
+		//		r - pRocessing   显示加载时的进度条
+		//		C - copy 显示复制，excel的控件
+	        "dom": 'T',
+	        "tableTools": {
+	        	"sSwfPath": "lib/jsExcel/js/copy_csv_xls_pdf.swf",
+	        	"aButtons": [
+	                {sExtends: "xls", oSelectorOpts: {page: "current" }, sFileName: "test.xls"}
+	            ]
+			},
+			"fnInitComplete": function(oSettings){
+//					console.log(json);
+			}
+	    });
+    }
+</script>

@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css" />
+<title>图片剪裁帮助文档</title>
+<style type="text/css">
+
+</style>
+</head>
+
+<body>
+<div class="container">
+	<div class="rows text-center"><h2>图片剪裁帮助文档</h2></div>
+	<br/>
+	<div class="rows"><h4>预览效果：</h4></div>
+	<p><img src="images/demo_img1.png" /></p>
+	<p><img src="images/demo_img2.png" /></p>
+	<p><img src="images/demo_img3.png" /></p>
+	<br/>
+	<p><font color="red">本服务仅支持ie8+以及其它支持html5的浏览器</font></p>
+	<div class="rows"><h4>用户前端使用说明：</h4></div>
+	<div class="bs-example">
+	    <pre>
+$("#testBtn").fnImageCrop({
+		aspectRatio : 4 / 3,
+	accno: accno,//必传
+	key:  random,//必传
+	sign: md5(random+"6799f4e52a01461fa463b3ed81e79e0c"),//必传
+	flash_swf_url : '/imagecut/resources/js/Moxie.swf',//必传
+	silverlight_xap_url : '/imagecut/resources/js/Moxie.xap',//必传
+	},function(res){//返回处理后图片，并处理的回调函数
+		if(res.status == "success"){
+			$("#resultImg").attr("src", res.preview).show();//返回预览地址有效期一天，过期自动删除
+		}else{
+			alert("出错了");
+			window.location.reload();
+		}
+	}
+);
+需调用:
+&lt;link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
+&lt;link rel="stylesheet" type="text/css" href="css/jquery.Jcrop.min.css" />
+&lt;script type="text/javascript" src="jquery-1.11.2.min.js">&lt;/script>
+&lt;script type="text/javascript" src="bootstrap/js/bootstrap.min.js">&lt;/script>
+&lt;script type="text/javascript" src="js/plupload.full.min.js">&lt;/script>
+&lt;script type="text/javascript" src="js/jquery.Jcrop.min.js">&lt;/script>
+&lt;script type="text/javascript" src="js/imageCrop.js">&lt;/script>
+	    </pre>
+<h2 style="margin-bottom:10px; background:none repeat scroll 0 0 #7a9bbf; color:#ffffff; line-height:30px; text-indent:2px"><a name="t0"></a>
+options 参数说明（可选）</h2>	 
+<br/>
+<table width="100%" class="table">
+<tbody>
+<tr>
+<td><strong>参数名</strong></td>
+<td><strong>默认值</strong></td>
+<td><strong>参数说明</strong></td>
+</tr>
+<tr>
+<td>allowSelect</td>
+<td>true</td>
+<td>允许新选框</td>
+</tr>
+<tr>
+<td>allowMove</td>
+<td>true</td>
+<td>允许选框移动</td>
+</tr>
+<tr>
+<td>allowResize</td>
+<td>true</td>
+<td>允许选框缩放</td>
+</tr>
+<tr>
+<td>aspectRatio</td>
+<td>0</td>
+<td>选框宽高比。说明：width/height</td>
+</tr>
+<tr>
+<td>dragEdges</td>
+<td>true</td>
+<td>允许拖动边框</td>
+</tr>
+<tr>
+<td>minSelect</td>
+<td>[0,0]</td>
+<td>选框最小选择尺寸。说明：若选框小于该尺寸，则自动取消选择</td>
+</tr>
+<tr>
+<td>maxSize</td>
+<td>[0,0]</td>
+<td>选框最大尺寸</td>
+</tr>
+<tr>
+<td>minSize</td>
+<td>[0,0]</td>
+<td>选框最小尺寸</td>
+</tr>
+<tr>
+<td>accno</td>
+<td>''</td>
+<td>用户帐号（必填项）</td>
+</tr>
+<tr>
+<td>key</td>
+<td>''</td>
+<td>随机数（必填项）</td>
+</tr>
+<tr>
+<td>sign</td>
+<td>''</td>
+<td>认证签名（必填项，由随机数和用户key生成md5签名）</td>
+</tr>
+<tr>
+<td>ImgType</td>
+<td>"gif,jpeg,jpg,bmp,png"</td>
+<td>上传图片类型(逗号之间不能有空格)</td>
+</tr>
+<tr>
+<td>max_file_size</td>
+<td>"2mb"</td>
+<td>上传图片大小</td>
+</tr>
+<tr>
+<tr>
+<td>flash_swf_url</td>
+<td>''</td>
+<td>图片上传使用flash（必填项)</td>
+</tr>
+<tr>
+<tr>
+<td>silverlight_xap_url</td>
+<td>''</td>
+<td>图片上传使用xap文件（必填项)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+	</div>
+	<br/><br/>
+	<div class="rows">
+		<h4>用户后台处理回调接口：</h4>
+		<blockquote>
+	      <h5>用户回调demo地址下载：</h5>
+	      <footer><a href="http://cimg.eluyou.cc/imagecut/resources/example.zip" target="_blank">下载</a></footer>
+	    </blockquote>
+	</div>
+</div>
+</body>
+</html>

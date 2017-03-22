@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>图片剪裁旋转方法封装</title>
+</head>
+
+<body>
+<form id="cropImgForm">
+	<input type="file" id="file" value="上传" />
+	<p><button id="cropBeginBtn">图片处理</button></p>
+	<img id="cropTestImg" src="img/mm1.jpg" />
+	<p>&nbsp;</p>
+	<p><input type="submit" value="截取" /></p>
+</form>
+<script type="text/javascript" src="../../../jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="js/excanvas.js"></script>
+<script type="text/javascript" src="js/crop_rotation.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+	var oImg = document.getElementById("cropTestImg");
+	document.getElementById("cropBeginBtn").onclick = function(){
+		fnImageCropRot(oImg);
+	};	
+	
+	$("#cropImgForm").submit(function(e){
+		if($("#cropPosX").length < 1){
+			alert("请进行图片处理");
+		}else{
+			alert("X:"+$("#cropPosX").val()+"\n"+
+				"Y:"+$("#cropPosY").val()+"\n"+
+				"width:"+$("#cropImageWidth").val()+"\n"+
+				"height:"+$("#cropImageHeight").val()
+			);
+		}
+		return false;
+	});
+	
+	$("#file").uploadPreview({ 
+		Img: "cropTestImg", 
+		Callback: function(){
+			console.log($("#file").val());
+		}
+	});
+	
+	parent.setFrameH($("body").height()+50);
+};
+</script>
+</body>
+</html>

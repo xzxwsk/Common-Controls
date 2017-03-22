@@ -1,0 +1,225 @@
+<div class="container" id="container">
+	<br/>
+	<div class="clearfix">官方DEMO地址：<a href="http://www.plupload.com/examples/" target="_blank">http://www.plupload.com/examples/</a></div>
+	<div>官方API文档地址： <a href="http://www.plupload.com/docs/" target="_blank">http://www.plupload.com/docs/</a></div>
+	<div>API中文文档地址： <a href="http://www.phpin.net/tools/plupload/" target="_blank">http://www.phpin.net/tools/plupload/</a></div>
+	<br/>
+	<pre>
+var uploader = new plupload.Uploader({
+	runtimes : 'html5,flash,silverlight,html4',
+	browse_button : 'pickfiles', // you can pass an id...
+	container: document.getElementById('container'), // ... or DOM Element itself
+	url : 'upload.php',
+	flash_swf_url : '../js/Moxie.swf',
+	silverlight_xap_url : '../js/Moxie.xap',
+	
+	filters : {
+		max_file_size : '4gb',
+		mime_types: [
+			{title : "Image files", extensions : "jpg,gif,png"},
+			{title : "Zip files", extensions : "zip,rar"}
+		]
+	},
+
+	init: {
+		PostInit: function() {
+			document.getElementById('filelist').innerHTML = '';
+
+			document.getElementById('uploadfiles').onclick = function() {
+				uploader.start();
+				return false;
+			};
+		},
+
+		FilesAdded: function(up, files) {
+			plupload.each(files, function(file) {
+				document.getElementById('filelist').innerHTML += '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div>';
+			});
+		},
+
+		UploadProgress: function(up, file) {
+			document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+		},
+
+		Error: function(up, err) {
+			document.getElementById('console').appendChild(document.createTextNode("\nError #" + err.code + ": " + err.message));
+		}
+	}
+});
+
+uploader.init();		
+	</pre>
+	<br/>
+	<h2>Demo：</h2>
+	<div id="filelist">Your browser doesn't have Flash, Silverlight or HTML5 support.</div>
+	<br/>
+	<a id="pickfiles" href="javascript:;">[Select files]</a> 
+    <a id="uploadfiles" href="javascript:;">[Upload files]</a>
+    <br/><br/>
+    <pre id="console"></pre>
+    <br/>
+</div>
+
+<script type="text/javascript" src="lib/plupload-2.1.8/js/plupload.full.min.js"></script>
+<script type="text/javascript">
+var uploader = new plupload.Uploader({
+	runtimes : 'html5,flash,silverlight,html4',
+	browse_button : 'pickfiles', // you can pass an id...
+	container: document.getElementById('container'), // ... or DOM Element itself
+	url : 'upload.php',
+	flash_swf_url : 'lib/plupload-2.1.8/js/Moxie.swf',
+	silverlight_xap_url : 'lib/plupload-2.1.8/js/Moxie.xap',
+	
+	filters : {
+		max_file_size : '4gb',
+		mime_types: [
+			{title : "Image files", extensions : "jpg,gif,png"},
+			{title : "Zip files", extensions : "zip,rar"}
+		]
+	},
+
+	init : {
+		PostInit: function() {
+			// Called after initialization is finished and internal event handlers bound
+			log('[PostInit]');
+			
+			document.getElementById('uploadfiles').onclick = function() {
+				uploader.start();
+				return false;
+			};
+		},
+
+		Browse: function(up) {
+            // Called when file picker is clicked
+            log('[Browse]');
+        },
+
+        Refresh: function(up) {
+            // Called when the position or dimensions of the picker change
+            log('[Refresh]');
+        },
+ 
+        StateChanged: function(up) {
+            // Called when the state of the queue is changed
+            log('[StateChanged]', up.state == plupload.STARTED ? "STARTED" : "STOPPED");
+        },
+ 
+        QueueChanged: function(up) {
+            // Called when queue is changed by adding or removing files
+            log('[QueueChanged]');
+        },
+
+		OptionChanged: function(up, name, value, oldValue) {
+			// Called when one of the configuration options is changed
+			log('[OptionChanged]', 'Option Name: ', name, 'Value: ', value, 'Old Value: ', oldValue);
+		},
+
+		BeforeUpload: function(up, file) {
+			// Called right before the upload for a given file starts, can be used to cancel it if required
+			uploader.settings.multipart_params = {
+				filename : file.name,
+				filesize : file.size
+			};
+			log('[BeforeUpload]', 'File: ', file);
+		},
+ 
+        UploadProgress: function(up, file) {
+            // Called while file is being uploaded
+            log('[UploadProgress]', 'File:', file, "Total:", up.total);
+        },
+
+		FileFiltered: function(up, file) {
+			// Called when file successfully files all the filters
+            log('[FileFiltered]', 'File:', file);
+		},
+ 
+        FilesAdded: function(up, files) {
+            // Called when files are added to queue
+            log('[FilesAdded]');
+ 
+            plupload.each(files, function(file) {
+                log('  File:', file);
+            });
+        },
+ 
+        FilesRemoved: function(up, files) {
+            // Called when files are removed from queue
+            log('[FilesRemoved]');
+ 
+            plupload.each(files, function(file) {
+                log('  File:', file);
+            });
+        },
+ 
+        FileUploaded: function(up, file, info) {
+            // Called when file has finished uploading
+            log('[FileUploaded] File:', file, "Info:", info);
+        },
+ 
+        ChunkUploaded: function(up, file, info) {
+            // Called when file chunk has finished uploading
+            log('[ChunkUploaded] File:', file, "Info:", info);
+        },
+
+		UploadComplete: function(up, files) {
+			// Called when all files are either uploaded or failed
+            log('[UploadComplete]');
+		},
+
+		Destroy: function(up) {
+		// Called when uploader is destroyed
+            log('[Destroy] ');
+		},
+ 
+        Error: function(up, args) {
+            // Called when error occurs
+            log('[Error] ', args);
+        }
+    }
+});
+
+uploader.init();
+
+
+//demo打日志方法，实用中可不写
+function log() {
+	var str = "";
+	plupload.each(arguments, function(arg) {
+        var row = ""; 
+        if (typeof(arg) != "string") {
+        	plupload.each(arg, function(value, key) {
+                 if (arg instanceof plupload.File) {
+                    switch (value) {
+                         case plupload.QUEUED:
+                             value = 'QUEUED';
+                             break;
+ 
+                         case plupload.UPLOADING:
+                             value = 'UPLOADING';
+                             break;
+ 
+                         case plupload.FAILED:
+                             value = 'FAILED';
+                             break;
+ 
+                         case plupload.DONE:
+                             value = 'DONE';
+                             break;
+                    }
+                }
+ 
+                if (typeof(value) != "function") {
+                    row += (row ? ', ' : '') + key + '=' + value;
+                }
+            });
+ 
+            str += row + " ";
+         } else {
+            str += arg + " ";
+         }
+    });
+ 
+    var log = document.getElementById('console');
+    log.innerHTML += str + "\n";
+}
+</script>

@@ -1,0 +1,223 @@
+<link rel="stylesheet" type="text/css" href="lib/Echarts/demo.css"  />
+<div class="container pdtb20 font16 other_charts_ls"><a href="lib/Echarts/echarts_demo.html" class="other_charts">曲线图</a> &nbsp; <a href="lib/Echarts/echarts_stack_demo.html" class="other_charts">柱状图</a> &nbsp; <span>饼图</span></div>
+<div class="container" id="EchartsBox"></div>
+<div class="container pdtb20" id="EchartsBox2"></div>
+<div class="container pdtb20" id="EchartsBox3"></div>
+
+<script type="text/javascript" src="lib/Echarts/js/echarts-all-3.js"></script>
+<script type="text/javascript">
+$(function(){
+	var container_h = $("#EchartsBox").parent().height() - 66;
+	$("#EchartsBox").height(container_h);
+	var pieChart = echarts.init(document.getElementById('EchartsBox'));
+	var option = {
+	    title : {
+	        text: '环形图',
+	        subtext: '带标签线',
+	        x:'center'
+	    },
+	    tooltip : {
+	        trigger: 'item',
+	        formatter: "{a} <br/>{b} : {c} ({d}%)"
+	    },
+	    legend: {
+	        orient: 'vertical',
+	        left: 'left',
+	        data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+	    },
+	    series : [
+	        {
+	            name: '访问来源',
+	            type: 'pie',
+	            radius : ['50%', '70%'],
+	            center: ['50%', '60%'],
+	            data:[
+	                {value:335, name:'直接访问'},
+	                {value:310, name:'邮件营销'},
+	                {value:234, name:'联盟广告'},
+	                {value:135, name:'视频广告'},
+	                {value:1548, name:'搜索引擎'}
+	            ],
+	            itemStyle: {
+	                emphasis: {
+	                    shadowBlur: 10,
+	                    shadowOffsetX: 0,
+	                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+	                }
+	            },
+	            labelLine: {
+	                normal: {
+	                    show: true
+	                }
+	            }
+	        }
+	    ]
+	};
+
+	pieChart.showLoading({text: '正在努力加载中...'});
+	setTimeout(function(){
+		pieChart.setOption(option);
+		pieChart.hideLoading();
+	},1000);
+	
+	$("#EchartsBox2").height(container_h);
+	var pieChart2 = echarts.init(document.getElementById('EchartsBox2'));
+	var option2 = {
+		title : {
+	        text: '环形图',
+	        subtext: '不带标签线，标签显示在环中心',
+	        subtextStyle: {
+	        	color: "#333333",
+	        	fontSize: 14
+	        },
+	        x:'right'
+	    },
+	    tooltip: {
+	        trigger: 'item',
+	        formatter: "{a} <br/>{b}: {c} ({d}%)"
+	    },
+	    legend: {
+	        orient: 'vertical',
+	        x: 'right',
+	        y: 50,
+	        align: 'left',
+	        data:[{
+	        	name:'直接访问',
+	        	icon:'circle'
+	        },
+	        {
+	        	name:'邮件营销',
+	        	icon:'rect'
+	        },
+	        {
+	        	name:'联盟广告',
+	        	icon:'roundRect'
+	        },
+	        {
+	        	name:'视频广告',
+	        	icon:'triangle'
+	        },
+	        {
+	        	name:'搜索引擎',
+	        	icon:'pin'
+	        }]
+	    },
+	    series: [
+	        {
+	            name:'访问来源',
+	            type:'pie',
+	            radius: ['50%', '70%'],
+	            avoidLabelOverlap: false,
+	            label: {
+	                normal: {
+	                    show: false,
+	                    position: 'center'
+	                },
+	                emphasis: {
+	                    show: true,
+	                    textStyle: {
+	                        fontSize: '30',
+	                        fontWeight: 'bold'
+	                    }
+	                }
+	            },
+	            labelLine: {
+	                normal: {
+	                    show: false
+	                }
+	            },
+	            data:[
+	                {value:335, name:'直接访问'},
+	                {value:310, name:'邮件营销'},
+	                {value:234, name:'联盟广告'},
+	                {value:135, name:'视频广告'},
+	                {value:1548, name:'搜索引擎'}
+	            ]
+	        }
+	    ]
+	};
+
+	pieChart2.showLoading({text: '正在努力加载中...'});
+	setTimeout(function(){
+		pieChart2.setOption(option2);
+		pieChart2.hideLoading();
+	},1000);
+	
+	$("#EchartsBox3").height(container_h);
+	var pieChart3 = echarts.init(document.getElementById('EchartsBox3'));
+	var option3 = {
+	    title : {
+	        text: '饼图',
+	        subtext: '标签显示在扇区内部',
+	        x:'center'
+	    },
+	    tooltip : {
+	        trigger: 'item',
+	        formatter: "{a} <br/>{b} : {c} ({d}%)"
+	    },
+	    legend: {
+	        orient: 'horizontal',
+	        left: 'center',
+	        bottom: 0,
+	        data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+	    },
+	    color: ["#B65708", '#8064A2', '#4BACC6', '#F79646', '#4F81BD'],
+	    series : [
+	        {
+	            name: '访问来源',
+	            type: 'pie',
+	            radius : '55%',
+	            center: ['50%', '60%'],
+	            data:[
+	                {value:335, name:'直接访问'},
+	                {value:310, name:'邮件营销'},
+	                {value:234, name:'联盟广告'},
+	                {value:135, name:'视频广告'},
+	                {value:1548, name:'搜索引擎'}
+	            ],
+	            itemStyle: {
+	                emphasis: {
+	                    shadowBlur: 10,
+	                    shadowOffsetX: 0,
+	                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+	                }
+	            },
+	            label: {
+	                normal: {
+	                    show: true,
+	                    position: 'inside',
+	                    textStyle: {
+	                        color: "#000"
+	                    }
+	                },
+	                emphasis: {
+	                    show: true,
+	                    textStyle: {
+	                    	color: "#000",
+	                    	fontSize: 14,
+	                        fontWeight: 'bold'
+	                    }
+	                }
+	            },
+	            labelLine: {
+	                normal: {
+	                    show: false
+	                }
+	            },
+	        }
+	    ]
+	};
+
+	pieChart3.showLoading({text: '正在努力加载中...'});
+	setTimeout(function(){
+		pieChart3.setOption(option3);
+		pieChart3.hideLoading();
+	},1000);
+	
+	$(".other_charts").click(function(e){
+		e.preventDefault();
+		var href = $(this).attr("href");
+		$("#page-inner").load(href);
+	});
+});
+</script>

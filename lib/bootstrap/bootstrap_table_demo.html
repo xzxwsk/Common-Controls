@@ -1,0 +1,248 @@
+<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap-table.css" />
+<style type="text/css">
+.bootstrap-table .fixed-table-container{background:rgba(255,255,255,0.3);}	
+</style>
+<div class="container" id="bootstrapTableCon">
+	<p>官方文档地址：<a href="http://bootstrap-table.wenzhixin.net.cn/documentation/" target="_blank">http://bootstrap-table.wenzhixin.net.cn/documentation/</a></p>
+	<p>官方demo地址：<a href="http://bootstrap-table.wenzhixin.net.cn/examples/" target="_blank">http://bootstrap-table.wenzhixin.net.cn/examples/</a></p>
+	<p>最基本表格：</p>
+	<table id="tableBase"
+		data-side-pagination="server"
+		data-url="lib/bootstrap/bootstrap_table_data.json" 
+		data-locale="zh-CN">
+  	</table>
+  	<br/>
+  	<p>带复杂功能的表格：</p>
+	<div id="toolbar">
+        <button id="remove" class="btn btn-danger" disabled>
+            <i class="glyphicon glyphicon-remove"></i> Delete
+        </button>
+    </div>
+	<table id="table"
+	   data-toolbar="#toolbar"
+       data-search="true"
+       data-show-refresh="true"
+       data-show-toggle="true"
+       data-show-columns="true"
+	   data-detail-view="true"
+	   data-detail-formatter="detailFormatter"
+	   data-minimum-count-columns="2" 
+	   data-show-pagination-switch="true"
+	   data-id-field="id" 
+	   data-pagination="true" 
+	   data-page-list="[10, 25, 50, 100, ALL]"
+	   data-side-pagination="server"
+	   data-url="lib/bootstrap/bootstrap_table_data.json" 
+	   data-locale="zh-CN" 
+	   data-response-handler="responseHandler">
+  	</table>
+  	<!--data-response-handler是数据不一致时正确显示的关键, side-pagination="server"，返回的数据应有{
+  "total": 24,
+  "rows": []
+}，如果side-pagination="client"，则数据应为[]-->
+</div>
+
+<script type="text/javascript">
+var $table = $('#table'),
+$remove = $('#remove'),
+selections = [0];
+
+$(function(){	
+	var scripts = ['lib/bootstrap/js/bootstrap-table.js','lib/bootstrap/locale/bootstrap-table-zh-CN.min.js'],
+      eachSeries = function (arr, iterator, callback) {
+        callback = callback || function () {};
+        if (!arr.length) {
+            return callback();
+        }
+        var completed = 0;
+        var iterate = function () {
+            iterator(arr[completed], function (err) {
+                if (err) {
+                    callback(err);
+                    callback = function () {};
+                }
+                else {
+                    completed += 1;
+                    if (completed >= arr.length) {
+                        callback(null);
+                    }
+                    else {
+                        iterate();
+                    }
+                }
+            });
+        };
+        iterate();
+    };
+
+	eachSeries(scripts, getScript, initTable);
+	setTimeout(function(){
+		$("#tableBase").bootstrapTable({
+		  height:300,
+		  columns: [
+			{
+	            field: 'id',
+	            title: 'Item ID',
+	            align: 'center'
+	       },
+	       {
+	            field: 'name',
+	            title: 'Item Name',
+	            align: 'center'
+	        }, 
+	        {
+	            field: 'price',
+	            title: 'Item Price',
+	            align: 'center',
+	        }
+		  ]
+		});
+	},1000);
+  
+//initTable();
+
+	$table.on('check.bs.table uncheck.bs.table ' +
+	        'check-all.bs.table uncheck-all.bs.table', function () {
+	    $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
+	
+	    selections = getIdSelections();
+	});
+	$table.on('expand-row.bs.table', function (e, index, row, $detail) {
+	    if (index % 2 == 1) {
+	        $detail.html('Loading from ajax request...');
+	        $.get('LICENSE', function (res) {
+	            $detail.html(res.replace(/\n/g, '<br>'));
+	        });
+	    }
+	});
+//$table.on('all.bs.table', function (e, name, args) {
+//  console.log(name, args);
+//});
+	$remove.click(function () {
+        var ids = getIdSelections();
+        $table.bootstrapTable('remove', {
+            field: 'id',
+            values: ids
+        });
+        $remove.prop('disabled', true);
+    });
+
+});  
+
+window.operateEvents = {
+	'click .like': function (e, value, row, index) {
+	    alert('You click like action, row: ' + JSON.stringify(row));
+	},
+	'click .remove': function (e, value, row, index) {
+	    $table.bootstrapTable('remove', {
+	        field: 'id',
+	        values: [row.id]
+	    });
+	}
+};
+
+function initTable() {
+	$table.bootstrapTable({
+    height: getHeight(),
+    columns: [
+      [
+        {
+            field: 'state',
+            checkbox: true,
+            rowspan: 2,
+            align: 'center',
+            valign: 'middle'
+        }, {
+            title: 'Item ID',
+            field: 'id',
+            rowspan: 2,
+            align: 'center',
+            valign: 'middle',
+            sortable: true
+        }, {
+            title: 'Item Detail',
+            colspan: 3,
+            align: 'center'
+        }
+    	],
+    	[
+        {
+            field: 'name',
+            title: 'Item Name',
+            sortable: true,
+            align: 'center'
+        }, {
+            field: 'price',
+            title: 'Item Price',
+            sortable: true,
+            align: 'center',
+        }, {
+            field: 'operate',
+            title: 'Item Operate',
+            align: 'center',
+            events: operateEvents,
+			formatter: operateFormatter
+        }
+      ]
+    ]
+	});
+}
+
+function getIdSelections() {
+    return $.map($table.bootstrapTable('getSelections'), function (row) {
+        return row.id
+    });
+}
+
+function responseHandler(res) {
+    $.each(res.rows, function (i, row) {
+        row.state = $.inArray(row.id, selections) !== -1;
+    });
+    return res;
+}  
+
+function detailFormatter(index, row) {
+    var html = [];
+    $.each(row, function (key, value) {
+        html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+		});
+		return html.join('');
+}
+
+function operateFormatter(value, row, index) {
+  return [
+    '<a class="like" href="javascript:void(0)" title="Like">',
+    '	<i class="glyphicon glyphicon-heart"></i>',
+    '</a>  ',
+    '<a class="remove" href="javascript:void(0)" title="Remove">',
+    '	<i class="glyphicon glyphicon-remove"></i>',
+    '</a>'
+	].join('');
+}
+  
+function getHeight() {
+    return $("#page-inner").height()-40;
+}
+  
+function getScript(url, callback) {
+	var head = document.getElementsByTagName('head')[0];
+	var script = document.createElement('script');
+	script.src = url;
+	
+	var done = false;
+	script.onload = script.onreadystatechange = function() {
+		if (!done && (!this.readyState ||
+        	this.readyState == 'loaded' || this.readyState == 'complete')) {
+	        done = true;
+	        if (callback)
+	            callback();
+	
+	        script.onload = script.onreadystatechange = null;
+    	}
+	};
+
+	head.appendChild(script);
+
+	return undefined;
+}
+</script>

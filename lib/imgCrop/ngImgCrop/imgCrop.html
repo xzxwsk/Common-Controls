@@ -1,0 +1,254 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title></title>
+<style type="text/css">
+html{font-size:62.5%;overflow-y:scroll;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}
+.container{font-size:125%;}
+.content{color:#181818;font-family:Lato,sans-serif;font-size:13px;font-size:1.3rem;line-height:1.5}
+.content a,.content blockquote,.content em,.content font,.content h1,.content h2,.content h3,.content h4,.content h5,.content h6,.content i,.content ins,.content li,.content ol,.content p,.content pre{border:0;font-size:100%;margin:0;outline:0;padding:0;vertical-align:baseline}
+.content h1,.content h2,.content h3,.content h4,.content h5,.content h6{clear:both;margin:0 0 10px 0}
+.content p{margin-bottom:1.5em;font-size:1.2em}
+.content h2{font-size:22px;line-height:26px}
+.content h3{font-size:18px;line-height:24px}
+.content ol{list-style:decimal}
+.content pre{background:#eee;font-family:"Courier 10 Pitch",Courier,monospace;font-size:15px;font-size:1.5rem;line-height:1.6;margin-bottom:1.6em;padding:1.6em;overflow:auto;max-width:100%}
+.content code{font:15px Monaco,Consolas,"Andale Mono","DejaVu Sans Mono",monospace}
+.content em,.content i{font-style:italic}
+img-crop{width:100%;height:100%;display:block;position:relative;overflow:hidden}
+img-crop canvas{display:block;position:absolute;top:50%;left:50%;outline:0;-webkit-tap-highlight-color:transparent}	
+.cropArea{background:#E4E4E4;overflow:hidden;width:500px;height:350px}
+</style>
+</head>
+<body>
+<body>
+
+<div class="container" ng-app="app" ng-controller="Ctrl">
+	<div ng-app="app" ng-controller="Ctrl" class="ng-scope">  
+		<p>基于angular，本地预览并截图，返回截取后的图片data:base64，只能按1：1比例截图，仅支持HTML5浏览器</p>
+		<div>Select an image file: <input type="file" id="fileInput"></div>
+		<div class="cropArea">
+			<img-crop image="myImage" result-image="myCroppedImage" area-type="square"></img-crop>
+		</div>
+		<div>Cropped Image:</div>
+		<div><img ng-src="{{myCroppedImage}}" /></div>
+	</div>
+</div>
+
+<br/>
+<pre>
+<img-crop
+    image="{string}"
+    result-image="{string}"
+   [change-on-fly="{boolean}"]
+   [area-type="{circle|square}"]
+   [area-min-size="{number}"]
+   [result-image-size="{number}"]
+   [result-image-format="{string}"]
+   [result-image-quality="{number}"]
+   [on-change="{expression}"]
+   [on-load-begin="{expression"]
+   [on-load-done="{expression"]
+   [on-load-error="{expression"]
+></img-crop>	
+</pre>
+
+<div class="content" itemprop="text">
+			<h1>ngImgCrop</h1>
+
+<p>Simple Image Crop directive for AngularJS. Enables to crop a circle or a square out of an image.</p>
+
+<h2>Screenshots</h2>
+
+<p><img src="img/circle_1.jpg" alt="Circle Crop" title="Circle Crop"></p>
+
+<p><img src="img/square_1.jpg" alt="Square Crop" title="Square Crop"></p>
+
+<h2>Live demo</h2>
+
+<p><a href="http://jsfiddle.net/alexk111/rw6q9/?utm_source=angular-js.in&amp;utm_medium=website&amp;utm_campaign=content-curation">Live demo on JSFiddle</a></p>
+
+<h2>Requirements</h2>
+
+<ul>
+<li>AngularJS</li>
+<li>Modern Browser supporting </li>
+</ul>
+
+
+<h3>Add files</h3>
+
+<p>Add the scripts to your application. Make sure the <code>ng-img-crop.js</code> file is inserted <strong>after</strong> the <code>angular.js</code> library:</p>
+
+<pre><code class="html">&lt;script src="angular.js"&gt;&lt;/script&gt;
+&lt;script src="ng-img-crop.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" type="text/css" href="ng-img-crop.css"&gt;
+</code></pre>
+
+<h3>Add a dependancy</h3>
+
+<p>Add the image crop module as a dependancy to your application module:</p>
+
+<pre><code class="js">var myAppModule = angular.module('MyApp', ['ngImgCrop']);
+</code></pre>
+
+<h2>Usage</h2>
+
+<ol>
+<li>Add the image crop directive <code>&lt;img-crop&gt;</code> to the HTML file where you want to use an image crop control. <em>Note:</em> a container, you place the directive to, should have some pre-defined size (absolute or relative to its parent). That's required, because the image crop control fits the size of its container.</li>
+<li>Bind the directive to a source image property (using <strong>image=""</strong> option). The directive will read the image data from that property and watch for updates. The property can be a url to an image, or a data uri.</li>
+<li>Bind the directive to a result image property (using <strong>result-image=""</strong> option). On each update, the directive will put the content of the crop area to that property in the data uri format.</li>
+<li>Set up the options that make sense to your application.</li>
+<li>Done!</li>
+</ol>
+
+<h2>Result image</h2>
+
+<p>The result image will always be a square for the both circle and square area types. It's highly recommended to store the image as a square on your back-end, because this will enable you to easily update your pics later, if you decide to implement some design changes. Showing a square image as a circle on the front-end is not a problem - it is as easy as adding a <em>border-radius</em> style for that image in a css.</p>
+
+<h2>Example code</h2>
+
+<p>The following code enables to select an image using a file input and crop it. The cropped image data is inserted into img each time the crop area updates.</p>
+
+<pre><code class="html">&lt;html&gt;
+&lt;head&gt;
+  &lt;script src="angular.js"&gt;&lt;/script&gt;
+  &lt;script src="ng-img-crop.js"&gt;&lt;/script&gt;
+  &lt;link rel="stylesheet" type="text/css" href="ng-img-crop.css"&gt;
+  &lt;style&gt;
+    .cropArea {
+      background: #E4E4E4;
+      overflow: hidden;
+      width:500px;
+      height:350px;
+    }
+  &lt;/style&gt;
+  &lt;script&gt;
+    angular.module('app', ['ngImgCrop'])
+      .controller('Ctrl', function($scope) {
+        $scope.myImage='';
+        $scope.myCroppedImage='';
+
+        var handleFileSelect=function(evt) {
+          var file=evt.currentTarget.files[0];
+          var reader = new FileReader();
+          reader.onload = function (evt) {
+            $scope.$apply(function($scope){
+              $scope.myImage=evt.target.result;
+            });
+          };
+          reader.readAsDataURL(file);
+        };
+        angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
+      });
+  &lt;/script&gt;
+&lt;/head&gt;
+&lt;body ng-app="app" ng-controller="Ctrl"&gt;
+  &lt;div&gt;Select an image file: &lt;input type="file" id="fileInput" /&gt;&lt;/div&gt;
+  &lt;div class="cropArea"&gt;
+    &lt;img-crop image="myImage" result-image="myCroppedImage"&gt;&lt;/img-crop&gt;
+  &lt;/div&gt;
+  &lt;div&gt;Cropped Image:&lt;/div&gt;
+  &lt;div&gt;&lt;img ng-src="{{myCroppedImage}}" /&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h2>Options</h2>
+
+<pre><code class="html">&lt;img-crop
+    image="{string}"
+    result-image="{string}"
+   [change-on-fly="{boolean}"]
+   [area-type="{circle|square}"]
+   [area-min-size="{number}"]
+   [result-image-size="{number}"]
+   [result-image-format="{string}"]
+   [result-image-quality="{number}"]
+   [on-change="{expression}"]
+   [on-load-begin="{expression"]
+   [on-load-done="{expression"]
+   [on-load-error="{expression"]
+&gt;&lt;/img-crop&gt;
+</code></pre>
+
+<h3>image</h3>
+
+<p>Assignable angular expression to data-bind to. NgImgCrop gets an image for cropping from it.</p>
+
+<h3>result-image</h3>
+
+<p>Assignable angular expression to data-bind to. NgImgCrop puts a data uri of a cropped image into it.</p>
+
+<h3>change-on-fly</h3>
+
+<p><em>Optional</em>. By default, to reduce CPU usage, when a user drags/resizes the crop area, the result image is only updated after the user stops dragging/resizing. Set true to always update the result image as the user drags/resizes the crop area.</p>
+
+<h3>area-type</h3>
+
+<p><em>Optional</em>. Type of the crop area. Possible values: circle|square. Default: circle.</p>
+
+<h3>area-min-size</h3>
+
+<p><em>Optional</em>. Min. width/height of the crop area (in pixels). Default: 80.</p>
+
+<h3>result-image-size</h3>
+
+<p><em>Optional</em>. Width/height of the result image (in pixels). Default: 200.</p>
+
+<h3>result-image-format</h3>
+
+<p><em>Optional</em>. Format of result image. Possible values include image/jpeg, image/png, and image/webp. Browser support varies. Default: image/png.</p>
+
+<h3>result-image-quality</h3>
+
+<p><em>Optional</em>. Quality of result image. Possible values between 0.0 and 1.0 inclusive. Default: browser default.</p>
+
+<h3>on-change</h3>
+
+<p><em>Optional</em>. Expression to evaluate upon changing the cropped part of the image. The cropped image data is available as $dataURI.</p>
+
+<h3>on-load-begin</h3>
+
+<p><em>Optional</em>. Expression to evaluate when the source image starts loading.</p>
+
+<h3>on-load-done</h3>
+
+<p><em>Optional</em>. Expression to evaluate when the source image successfully loaded.</p>
+
+<h3>on-load-error</h3>
+
+<p><em>Optional</em>. Expression to evaluate when the source image didn't load.</p>
+
+		</div>
+
+<script type="text/javascript" src="../../../jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="../../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/angular v1.2.1.js"></script>
+<script type="text/javascript" src="js/ng-img-crop.js"></script>
+<script type="text/javascript">
+angular.module('app', ['ngImgCrop'])
+	.controller('Ctrl', function($scope) {
+	$scope.myImage='';
+	$scope.myCroppedImage='';
+
+	var handleFileSelect=function(evt) {
+      	var file=evt.currentTarget.files[0];
+      	var reader = new FileReader();
+      	reader.onload = function (evt) {
+        	$scope.$apply(function($scope){
+          		$scope.myImage=evt.target.result;
+        	});
+      	};
+      	reader.readAsDataURL(file);
+    };
+    angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
+});
+$(function(){
+	parent.setFrameH($("body").height()+50);
+});
+</script>
